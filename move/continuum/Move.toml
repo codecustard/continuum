@@ -1,0 +1,5 @@
+[package]
+name = "continuum"
+edition = "2024"
+license = "MIT"
+authors = ["0xcodecustard"]
