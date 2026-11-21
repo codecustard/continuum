@@ -10,6 +10,10 @@ Games never call each other. They meet on the same owned objects under three rul
 
 Left out on purpose: trust and anti-cheat, balance, economy, and shared field names. Each game decides what it trusts.
 
+## Docs
+
+Standard, architecture, integration guide, decisions and roadmap: [`docs/`](docs/).
+
 ## Package
 
 `move/continuum`
