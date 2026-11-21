@@ -42,6 +42,31 @@ Type names use **original package IDs** everywhere, so records and registry keys
 
 Wallet users see one prompt per on-chain moment; zkLogin users see none.
 
+## Across chains
+
+Assets stay on their own chain. Shared state (records, slots, lineage) lives on one home chain, Sui. Nothing is bridged.
+
+| A game wants to | Game on Sui | Game on another chain |
+| --- | --- | --- |
+| Read objects and lineage | RPC or SDK | Same API, needs nothing |
+| Write shared state | Its own Move package | Through a hosted records path; someone else sponsors gas, so the game never holds SUI |
+| Prove a player owns an item | `derive` with the item in the transaction | Attested by a known signer, or claimed |
+
+**Levels of certainty:**
+
+- **Verified:** the source object was in the transaction. Sui only.
+- **Attested:** a known signer read the other chain and vouched for ownership. Any chain. *(planned)*
+- **Claimed:** an ID was typed in. Any chain.
+
+**Collections on other chains:**
+
+1. The player links a wallet on that chain to their Sui account by signing once. *(planned: account link record)*
+2. An attester checks ownership on that chain and signs it.
+3. A sidecar on Sui points at the item's CAIP-19 ID and holds the game's data.
+4. Ownership can change on the other chain, so games re-check when it matters.
+
+**Why one home chain:** one place to read, one family tree. The rules and CAIP-19 IDs don't depend on Sui, so a move is possible later.
+
 ## Off-chain pieces (planned)
 
 - **Indexer:** follows `Derived`, `Claimed`, `Registered` and game events; builds lineage; keeps the testnet snapshot.

@@ -22,6 +22,12 @@ The proof is two games sharing one object. The spec is written after, from what 
 - Which Koi fields count as shared core.
 - Mainnet timing (after review).
 
+## Later: cross-chain
+
+- **Account link:** a record tying a wallet on another chain (CAIP-10) to a Sui account, made by signing with both.
+- **Attested tier:** a known signer vouches that an address on another chain owns an item. A threshold-signing network can be the signer.
+- Note: adding a variant to a Move enum is not an allowed upgrade. If `provenance::Source` should get an `Attested` variant, add it before the package freezes (ideally before testnet).
+
 ## Later: games built without Move (after Gang Wars results)
 
 AI-built and vibe-coded games mostly won't write Move. Idea: a hosted `continuum::records` module.
