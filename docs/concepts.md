@@ -70,6 +70,7 @@ flowchart TB
 | Prove "this was made from that" | Nothing | **Rule 2:** `provenance::derive(&source)`, valid only with the source in the same transaction |
 | Know what another game's fields mean and how its art may be used | Type names and structure; package names in the Move Registry | **Rule 3:** a manifest describing fields, types made and read, and license |
 | Use an outside collection | Reading any object | **Records**: game-owned objects that point at the item through `derive` |
+| Use up another game's object (cook, craft, ascend) | Freezing or deleting, only by the type's own module | **Rule 4 (draft):** retire by freezing, the output derives from the input, one shared event |
 
 Continuum is deliberately thin: one small Move package plus conventions. Like ERC-721 on Ethereum, the value is everyone doing the same thing the same way.
 
@@ -81,6 +82,7 @@ Continuum is deliberately thin: one small Move package plus conventions. Like ER
 | Provenance (Rule 2) | The **game making the new thing** calls `derive` | Nothing |
 | Records | The **game** creates and owns them | Nothing |
 | Manifest (Rule 3) | Each **game** that wants to be found | Nothing |
+| Retire (Rule 4, draft) | The **object's author** offers `retire` and sets its rules | It must offer `retire`; otherwise nothing can be used up |
 
 That's why a collection like The Ones works with zero changes on its side. Gang Wars' record stores a provenance link to the One; `derive` only reads the One, so The Ones' code never runs, and the only consent needed is the holder's signature. Only slots need the author's cooperation.
 

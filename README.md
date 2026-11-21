@@ -10,6 +10,8 @@ Games never call each other. They meet on the same owned objects under three rul
 2. **Provenance.** A derived object stores a `Provenance`. It's verified only when made by `continuum::provenance::derive(witness, &source)`, with the source in the same transaction.
 3. **Manifest.** Games link a manifest from their package's record in Sui's Move Registry (MVR). The manifest says what fields mean, which types the game makes and reads, and the license for its art and data.
 
+A draft fourth rule, **retire**, covers using up another game's object by freezing it instead of deleting it. See [`docs/standard.md`](docs/standard.md).
+
 Left out on purpose: trust and anti-cheat, balance, economy, and shared field names. Each game decides what it trusts.
 
 ## Docs

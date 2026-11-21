@@ -14,6 +14,8 @@ Plain-word definitions, in the order you'll meet them.
 | **Slot** | Continuum's word for one game's dynamic field on another game's object. |
 | **`uid_mut`** | The public function Rule 1 asks types to expose, so other games can attach slots. Aborts if the owner locked the object. |
 | **Lock** | An owner switch on a Continuum object that stops new slots. |
+| **Retire** | Continuum's word for taking an object out of play: marked retired, `Retired` event, then frozen. Offered only by the type's own module. |
+| **Freeze** | Sui's way to make an object permanent and read-only, owned by nobody (`transfer::public_freeze_object`). |
 | **Witness** | A small struct a game defines with no public constructor. Passing it proves "this call comes from that game's code". |
 | **Provenance** | A record that an object was made from another one, and by which game. Made by `derive` (verified) or `claim` (unverified). |
 | **`derive`** | `continuum::provenance::derive(witness, &source, ctx)`: makes a verified provenance record; the source must be in the same transaction. |

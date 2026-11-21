@@ -55,6 +55,31 @@
           },
           "fields": {
             "$ref": "#/$defs/fields"
+          },
+          "retire": {
+            "type": "object",
+            "description": "Draft Rule 4. Whether and how other games may retire (use up) objects of this type. Retired objects are frozen, not deleted.",
+            "required": [
+              "allowed"
+            ],
+            "properties": {
+              "allowed": {
+                "enum": [
+                  "no",
+                  "approved",
+                  "anyone"
+                ],
+                "description": "no: never; approved: only games the author or owner approved; anyone: any game, with the owner's signature."
+              },
+              "function": {
+                "type": "string",
+                "description": "module::function to call, e.g. koi::retire."
+              },
+              "rules": {
+                "type": "string",
+                "description": "Plain words: grades, maturity, cooldowns, owner approval."
+              }
+            }
           }
         }
       }

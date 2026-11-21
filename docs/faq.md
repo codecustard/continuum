@@ -45,6 +45,22 @@ The **code**: the module that defines the key struct, not a person or wallet. If
 
 No. Nothing is predefined. "Slot" is our word for one piece of extra data attached to an object. A game can attach as many as it likes, each under its own key type (`GangWarsRecordSlot`, `GangWarsBuildingsSlot`, ...), holding any storable value.
 
+### Can a game use up another game's object?
+
+Only if the object's author allows it. In Move, only a type's own module can freeze or delete its objects, so Suikoi decides whether Tindahan may "cook" a koi whole, and under what rules. The draft Rule 4 ("retire") is the shared way to do it: the consuming game derives its output first, then calls the author's `retire`, which freezes the koi instead of deleting it and emits a `Retired` event.
+
+### Why freeze instead of delete?
+
+Others point at your objects: children through `parents`, dishes and dragons through provenance, other games through slots. Deleting breaks all of those links. A frozen object stays on chain forever, read-only and owned by nobody, so the family tree stays whole and nothing can bring it back into play.
+
+### Isn't retiring just transferring the object to the game?
+
+Close, but not the same. A transfer works without the author's help, and the object stays live: the game could resell or re-gift it, and you're trusting the game. Retire is guaranteed by the type's own code: the object is out of play for good and that's provable. Use a transfer when the object keeps living somewhere (a koi retired to a restaurant's pond as decor); use retire when it must be gone for good.
+
+### How dangerous is retiring?
+
+It's the riskiest mechanic, because it's permanent. A buggy or malicious game could retire someone's best item. Guards: the owner approves each game, the lock blocks it, the type sets rules (e.g. no S-grade), and the game's UI always confirms. On chain, consent is just the owner's signature, so the type's own rules are the real defense.
+
 ### Can anyone add anything to my objects?
 
 Only within limits. With Rule 1, other games can attach **their own** slots to **individual objects**, and only when the object's owner signs. They can't change your fields, your code, or other games' slots, and the owner can lock an object. Without Rule 1, nobody but your module can attach anything.

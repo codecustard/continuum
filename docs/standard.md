@@ -1,6 +1,6 @@
 # The standard (draft v0)
 
-Three rules. A game follows the ones that apply to it. Everything else (field names, stat scales, trust, economy) stays up to each game, so common conventions can come from use. This draft becomes a one-page spec after two games have shared an object for real.
+Three rules, plus a draft fourth. A game follows the ones that apply to it. Everything else (field names, stat scales, trust, economy) stays up to each game, so common conventions can come from use. This draft becomes a one-page spec after two games have shared an object for real.
 
 New to the terms? Read [concepts.md](concepts.md) first. The examples below use its running example: Suikoi's **Koi**, Tindahan's **Dish**, The Ones' **One** and Gang Wars' **record**.
 
@@ -113,6 +113,53 @@ flowchart LR
 **Where the link lives.** In your package's metadata in Sui's Move Registry (MVR): set `continuum.manifest` (the URI) and `continuum.manifest_hash` (32-byte hash, hex) with `@mvr/metadata::package_info::set_metadata`. Creating that record needs your package's UpgradeCap. Indexers find Continuum games by these keys. (The repo still contains an older `continuum::registry` module; it will be removed before testnet.)
 
 **Trust.** No names on chain; trust follows the package ID. Which games you trust is your call.
+
+---
+
+## Rule 4 (draft): Retire
+
+**Why.** Interop gets real stakes when one game's object can be used up in another: Tindahan cooking a koi whole, Suikoi's Ryumon turning a koi into a dragon, crafting, fusion, sacrifice. But others point at objects through provenance, slots and parents, so deleting breaks their links, and using something up must be safe and provable.
+
+**What the object's author does.** Only a type's own module can freeze or delete its objects (Move's rule), so the author decides whether and how its objects can be retired, through a public function:
+
+```move
+/// Suikoi decides the rules: which games, which grades, maturity, and so on.
+public fun retire<W: drop>(_by: W, mut koi: Koi, into: Option<ID>) {
+    assert!(!koi.locked, ELocked);
+    // ...Suikoi's own checks...
+    koi.retired = true;
+    event::emit(Retired { id: object::id(&koi), by: type_name::with_original_ids<W>(), into });
+    transfer::public_freeze_object(koi);   // a permanent, read-only fossil
+}
+```
+
+**What the consuming game does.** Derive first, then retire, in one transaction signed by the owner:
+
+```move
+public fun cook_whole(koi: Koi, ctx: &mut TxContext): Dish {
+    let from = provenance::derive(Tindahan {}, &koi, ctx);   // while the koi still exists
+    let dish = Dish { id: object::new(ctx), from };
+    suikoi::koi::retire(Tindahan {}, koi, option::some(object::id(&dish)));
+    dish
+}
+```
+
+```mermaid
+flowchart LR
+  K[Koi<br/>live] -->|"derive, then retire"| F[Koi<br/>frozen, read-only]
+  F -.->|provenance| D[Dish]
+```
+
+**The convention.**
+- **Freeze, don't delete.** The family tree, provenance links and other games' slots stay readable; nobody can trade, breed or change the object again.
+- **The output derives from the input**, so lineage continues (koi → dish).
+- **Locked objects can't be retired.**
+- **One event shape:** `Retired { id, by, into }`, so indexers and discovery apps can show "cooked by Tindahan into Dish #9".
+- **Declare it in the manifest:** each type's `retire` block says who may retire it (`no`, `approved`, `anyone`) and the rules.
+
+**Safety.** Retiring is permanent, so authors should guard it: owner approval per game, the lock, grade or rarity rules, and a clear confirmation screen in the game's UI. On chain, consent is the owner's signature; the contract can't tell which app produced it, so the type's own rules are the real defense.
+
+**Status.** Draft. A small `continuum::retire` helper (the event and the freeze) may ship once a game actually needs it. Games use their own words in their UI: Suikoi "enshrines" a koi in the Ryumon, Tindahan "cooks" it; under the hood both are retire.
 
 ---
 
