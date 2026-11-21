@@ -3,7 +3,7 @@
 ## Layers
 
 ```
-Remix Hub (discovery)        reads registry + indexer
+Discovery apps               read registry + indexer
   │
 Games (Suikoi, Gang Wars, …) own their packages, clients, servers
   │
@@ -71,7 +71,7 @@ Assets stay on their own chain. Shared state (records, slots, lineage) lives on 
 
 - **Indexer:** follows `Derived`, `Claimed`, `Registered` and game events; builds lineage; keeps the testnet snapshot.
 - **TypeScript SDK:** read helpers and transaction builders (`derive` with Kiosk borrow, slot reads).
-- **Remix Hub, MCP server and API:** discovery for people and agents.
+- **A discovery hub, MCP server and API:** discovery for people and agents.
 
 ## Testnet resets
 
