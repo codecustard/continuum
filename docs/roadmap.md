@@ -26,7 +26,7 @@ The proof is two games sharing one object. The spec is written after, from what 
 
 - **Account link:** a record tying a wallet on another chain (CAIP-10) to a Sui account, made by signing with both.
 - **Attested tier:** a known signer vouches that an address on another chain owns an item. A threshold-signing network can be the signer.
-- Note: adding a variant to a Move enum is not an allowed upgrade. If `provenance::Source` should get an `Attested` variant, add it before the package freezes (ideally before testnet).
+- Design it when a real cross-chain game needs it. It can ship as a separate `attestation` module (upgrades can add modules), stored next to a claimed provenance, so `provenance::Source` stays as is. Adding an enum variant isn't an allowed upgrade, but testnet can be republished freely; only mainnet locks it.
 
 ## Later: games built without Move (after Gang Wars results)
 

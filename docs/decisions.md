@@ -4,6 +4,8 @@ Newest first. One line of why each.
 
 ## 2026-11-20
 
+- **Attested tier deferred.** Design from a real cross-chain case; ship as its own module, not a new `Source` variant.
+- **One home chain (Sui) for shared state;** assets stay on their own chains, nothing bridged.
 - **Project site on GitHub Pages** from `site/`, deployed by Actions. One static page aimed at builders; neutral wording.
 - **Seamless play:** chain only at key moments; zkLogin + sponsored gas by default; sidecars belong to the game so updates need no player signature.
 
