@@ -182,10 +182,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 // from.source_is&lt;Koi&gt;() == true</span></code></pre>
     </div>
     <div class="rule">
-      <div><h3>Registry and manifest</h3><p>Register your package once. The entry is keyed by package ID, not name, and points at a manifest that says what your fields mean and how your art and data are licensed.</p></div>
-      <pre><code>registry.register(&amp;publisher,
-    <span class="s">b"https://…/manifest.json"</span>.to_string(),
-    manifest_hash, ctx);</code></pre>
+      <div><h3>Manifest</h3><p>Link a manifest from your package's record in Sui's Move Registry. It says what your fields mean, which types you make and read, and how your art and data are licensed.</p></div>
+      <pre><code>package_info.set_metadata(
+    <span class="s">"continuum.manifest"</span>,
+    <span class="s">"https://…/manifest.json"</span>);</code></pre>
     </div>
   </div>
   <p class="out"><b>Left out on purpose:</b> trust and anti-cheat, balance, shared stat names, economy. Each game decides what it trusts.</p>
@@ -205,7 +205,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   <p style="color:var(--muted)">Each level is optional and they stack. An existing Sui game can add them with a normal package upgrade.</p>
   <ol class="levels">
     <li><span class="n">0</span><div><h3>Read</h3><p>Do nothing. Read any object over RPC.</p></div><p class="get">Use other games' objects in yours.</p></li>
-    <li><span class="n">1</span><div><h3>Register</h3><p>Publish a manifest and call <code>register</code>.</p></div><p class="get">Other builders can find you and know what your fields mean.</p></li>
+    <li><span class="n">1</span><div><h3>Manifest</h3><p>Publish a manifest and link it from your MVR record.</p></div><p class="get">Other builders can find you and know what your fields mean.</p></li>
     <li><span class="n">2</span><div><h3>Derive</h3><p>Use <code>derive</code> when you make things from others' objects.</p></div><p class="get">Verified lineage back to the source.</p></li>
     <li><span class="n">3</span><div><h3>Open slots</h3><p>Expose <code>uid_mut</code> with a lock flag.</p></div><p class="get">Other games can build on your objects.</p></li>
   </ol>

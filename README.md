@@ -8,7 +8,7 @@ Games never call each other. They meet on the same owned objects under three rul
 
 1. **Open slots.** An object type exposes `uid_mut`. Any game can attach data keyed by its own struct with no public constructor, so only that game can write its slot.
 2. **Provenance.** A derived object stores a `Provenance`. It's verified only when made by `continuum::provenance::derive(witness, &source)`, with the source in the same transaction.
-3. **Registry and manifest.** Games register on chain by package ID. The manifest says what fields mean, which types the game makes and reads, and the license for its art and data.
+3. **Manifest.** Games link a manifest from their package's record in Sui's Move Registry (MVR). The manifest says what fields mean, which types the game makes and reads, and the license for its art and data.
 
 Left out on purpose: trust and anti-cheat, balance, economy, and shared field names. Each game decides what it trusts.
 
@@ -36,13 +36,17 @@ let p = continuum::provenance::derive(MyGame {}, &koi, ctx);
 
 A source in a Kiosk: `kiosk::borrow_val`, then `derive`, then `kiosk::return_val`, all in one transaction.
 
-Readers check `p.is_verified()`, `p.source_is<T>()` and `p.deriver_package()`, then decide whether to trust that package (for example, by looking it up in the registry).
+Readers check `p.is_verified()`, `p.source_is<T>()` and `p.deriver_package()`, then decide whether to trust that package (its MVR record and manifest say who it is).
 
-### Registering
+### Linking your manifest
 
-```move
-// in your package's init, or later with the Publisher you hold
-registry.register(&publisher, b"https://…/manifest.json".to_string(), sha256_of_manifest, ctx);
+Create your package's MVR record with your UpgradeCap, then set two keys:
+
+```ts
+tx.moveCall({ target: "@mvr/metadata::package_info::set_metadata",
+  arguments: [tx.object(packageInfo), tx.pure.string("continuum.manifest"), tx.pure.string("https://…/manifest.json")] });
+tx.moveCall({ target: "@mvr/metadata::package_info::set_metadata",
+  arguments: [tx.object(packageInfo), tx.pure.string("continuum.manifest_hash"), tx.pure.string("<sha256 hex>")] });
 ```
 
 The manifest format is in [`manifest/schema.json`](manifest/schema.json).

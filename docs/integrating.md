@@ -7,8 +7,8 @@ Each level is optional and they stack.
 | Level | You do | You get |
 | --- | --- | --- |
 | 0. Read | Nothing. Read objects over RPC or the indexer | Use others' assets in your game |
-| 1. Register | Claim your `Publisher`, publish a manifest, call `register` | Discoverable; others know your fields and license |
-| 2. Derive | Call `derive(YourWitness {}, &their_obj, ctx)` when you make things from others' objects | Verified lineage to the source |
+| 1. Manifest | Publish a manifest; put its link and hash in your package's MVR record | Discoverable; others know your fields and license |
+| 2. Derive | Call `derive(YourWitness {}, &their_obj, ctx)` when you make things from others' objects, or keep records about them | Verified lineage to the source |
 | 3. Open slots | Your types expose `uid_mut` with a lock flag | Other games can attach data to your objects |
 
 ## New game
@@ -24,7 +24,6 @@ module tindahan::dish;
 
 use continuum::provenance::{Self, Provenance};
 
-public struct TINDAHAN has drop {}                     // one-time witness → Publisher
 public struct Tindahan has drop {}                     // provenance witness, no public constructor
 public struct FedSlot has copy, drop, store {}         // slot key, no public constructor
 
@@ -53,7 +52,7 @@ sui::dynamic_field::add(koi.uid_mut(), FedSlot {}, times_fed);
 
 ## Existing game
 
-- **Already on Sui:** a compatible upgrade can add new public functions. Add `uid_mut` and a lock to your types, claim or reuse your `Publisher`, and register. No migration.
+- **Already on Sui:** a compatible upgrade can add new public functions. Add `uid_mut` and a lock to your types, and add your manifest keys to your MVR record. No migration.
 - **Off-chain game:** start at level 0 or 1. Write your results into records.
 
 ## Collections that don't know about Continuum

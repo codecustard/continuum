@@ -31,7 +31,7 @@ Type names use **original package IDs** everywhere, so provenance records stay s
 | `derive` from an owned object | Its owner | At on-chain moments only (mint, breed, enlist) |
 | Write to your own record | Your game | Every update, no player prompt |
 | Attach a slot via `uid_mut` | The object's owner | Rare |
-| `register` / `update_manifest` | Package publisher | Once, then on manifest changes |
+| Set manifest keys in MVR | Package owner (UpgradeCap) | Once, then on manifest changes |
 
 ## Keeping play seamless
 
@@ -78,4 +78,4 @@ Assets stay on their own chain. Shared state (records, slots, lineage) lives on 
 1. The indexer keeps every game object as JSON.
 2. After a wipe, republish the packages.
 3. Re-mint from the snapshot to the same owners.
-4. Re-register and update [`deployments/`](../deployments/).
+4. Re-create MVR records with the manifest keys and update [`deployments/`](../deployments/).
