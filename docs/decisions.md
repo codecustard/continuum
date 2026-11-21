@@ -4,6 +4,7 @@ Newest first. One line of why each.
 
 ## 2026-11-20
 
+- **Project site on GitHub Pages** from `site/`, deployed by Actions. One static page aimed at builders; neutral wording.
 - **Seamless play:** chain only at key moments; zkLogin + sponsored gas by default; sidecars belong to the game so updates need no player signature.
 
 ## 2026-11-19

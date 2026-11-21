@@ -2,6 +2,8 @@
 
 A shared layer on Sui that lets games build on each other's objects without asking permission.
 
+Site: https://codecustard.github.io/continuum/
+
 Games never call each other. They meet on the same owned objects under three rules:
 
 1. **Open slots.** An object type exposes `uid_mut`. Any game can attach data keyed by its own struct with no public constructor, so only that game can write its slot.
