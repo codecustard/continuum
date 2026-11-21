@@ -82,7 +82,7 @@ Continuum is deliberately thin: one small Move package plus conventions. Like ER
 | Records | The **game** creates and owns them | Nothing |
 | Manifest (Rule 3) | Each **game** that wants to be found | Nothing |
 
-That's why a collection like The Ones works with zero changes on its side: Gang Wars uses provenance and records. Only slots need the author's cooperation.
+That's why a collection like The Ones works with zero changes on its side. Gang Wars' record stores a provenance link to the One; `derive` only reads the One, so The Ones' code never runs, and the only consent needed is the holder's signature. Only slots need the author's cooperation.
 
 ## Next
 

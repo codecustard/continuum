@@ -12,6 +12,27 @@ Half of it. Sui gives the building blocks: objects that move between packages, p
 
 Continuum is the thin layer of conventions on top, like ERC-721 on Ethereum.
 
+### What does provenance actually solve? Isn't it just storing an ID?
+
+A plain ID is a claim; `derive` is proof.
+
+With a plain field like `made_from: koi #123`, a copycat game can mint "Official Dragon from Koi #123" without ever having that koi, do it a hundred times, or point at a koi that doesn't exist, and nobody agreed to it.
+
+With `derive(&koi)`, the real koi must be in the transaction. So it exists, Move has checked it really is a `Koi`, and its owner signed. The record also names which game made it, so readers can ignore games they don't trust.
+
+Examples: a Ryumon dragon proving it came from a real S-grade koi; Tindahan giving a bonus only to sushi cooked from a real rare koi; another game trusting that Gang Wars' "12 wins" record is about that actual One.
+
+It doesn't stop the same koi being used twice; "one dragon per koi" is the game's own rule (a derived-object address keyed by the koi's ID is a neat way to enforce it).
+
+### Doesn't Sui's transaction history already show where things came from?
+
+Partly. Off-chain, every transaction records which objects went in and which were created, so an indexer can see that Dish #9 was created in a transaction where Koi #123 was an input. Two gaps:
+
+- **Move contracts can't see transaction history.** A contract only sees the objects passed to it, so an on-chain check ("was this made from a real rare koi?") needs the proof inside the object.
+- **History doesn't say what the inputs mean.** A transaction may use several objects; it doesn't say which one was the source or which game vouches for it.
+
+Sui's derived objects aren't provenance either: `derived_object::claim(parent, key)` gives a predictable, one-per-key address under a parent, which is useful for finding and deduplicating records, but it doesn't prove the source was ever present.
+
 ### So Rule 1 is just making the `UID` public?
 
 Yes. By default a type's `UID` is private to its module. Move lets the author expose it with a public function. Rule 1 asks Continuum types to do that, under the name `uid_mut`, with an owner lock.
