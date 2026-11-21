@@ -36,5 +36,5 @@ Open, with current leanings:
 
 - **Who holds the GameCap?** Leaning: either; a platform can create and hold caps for its games, and the creator can claim theirs anytime.
 - **Records data:** Leaning: key/value only. Games that write Move already get typed data through their own package plus `derive`.
-- **Who pays gas at scale?** Leaning: each game or platform sponsors its own; Continuum covers its own games and a few early partners.
+- **Who pays gas at scale?** Leaning: each game or platform sponsors its own gas. Continuum itself holds no funds and pays for nothing.
 
