@@ -23,7 +23,7 @@ New here? Start with [`docs/concepts.md`](docs/concepts.md). Everything else is 
 | Module | What it does |
 | --- | --- |
 | `provenance` | `derive` makes a verified record from a source object in the same transaction. `claim` makes an unverified record from a CAIP-19 ID (other chains, typed-in IDs). Records name the game that made them and can't be copied or forged. |
-| `registry` | One shared `Registry`. Entries keyed by original package ID, holding a manifest URI, its 32-byte hash, and the current package ID after upgrades. Registering and editing need the package's `Publisher`. No names, approval, fees or removal. |
+| `registry` | *Being removed: manifest links move to Sui's Move Registry (MVR).* One shared `Registry`. Entries keyed by original package ID, holding a manifest URI, its 32-byte hash, and the current package ID after upgrades. Registering and editing need the package's `Publisher`. No names, approval, fees or removal. |
 
 ### Deriving
 

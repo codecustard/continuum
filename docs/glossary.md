@@ -20,8 +20,8 @@ Plain-word definitions, in the order you'll meet them.
 | **`claim`** | Makes an unverified provenance record from a CAIP-19 ID, for sources the chain can't check. |
 | **Record** | An object a game owns that points at someone else's object (through `derive` or `claim`) and holds the game's data about it. Used when the object has no slots. |
 | **Manifest** | A JSON file describing a game's types, field meanings, slots, witness, license and custody. Linked on chain with its hash. |
-| **Registry** | Where manifest links live on chain. Today `continuum::registry`; Sui's Move Registry (MVR) is under consideration. |
-| **Publisher** | A Sui object proving you published a package. Needed to edit your registry entry. |
+| **MVR (Move Registry)** | Sui's registry of package metadata: names, source links, versions. Continuum games add their manifest link there. |
+| **UpgradeCap** | The object that controls upgrades of a package. Needed to create its MVR record. |
 | **Kiosk** | A personal display case for NFTs on Sui. Supports creator sale rules and listing without giving up the item. |
 | **Owner cap (KioskOwnerCap)** | The key to a kiosk. Whoever holds it controls the kiosk and its items. |
 | **Transfer policy** | A creator's sale rules for a type held in kiosks, e.g. royalty. Every sale must pass them. |

@@ -100,7 +100,7 @@ flowchart LR
 - the license for your art and your on-chain data;
 - optional `custody`: whether your objects sit in Kiosks, are locked, and your transfer policy.
 
-**Where the link lives.** Today: `continuum::registry`, keyed by original package ID, writable only with your package's `Publisher`. Under consideration: Sui's Move Registry (MVR), which already holds package metadata and accepts custom keys. See [faq.md](faq.md).
+**Where the link lives.** In your package's metadata in Sui's Move Registry (MVR): set `continuum.manifest` (the URI) and `continuum.manifest_hash` (32-byte hash, hex) with `@mvr/metadata::package_info::set_metadata`. Creating that record needs your package's UpgradeCap. Indexers find Continuum games by these keys. (The repo still contains an older `continuum::registry` module; it will be removed before testnet.)
 
 **Trust.** No names on chain; trust follows the package ID. Which games you trust is your call.
 

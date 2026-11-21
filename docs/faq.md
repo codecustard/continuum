@@ -78,9 +78,9 @@ They're a third place to keep data. An app installed in a kiosk gets its own sto
 
 Normally the same person: whoever holds the kiosk's owner cap controls the NFTs in it. On chain the NFT's owner is recorded as the kiosk object. They can differ if the cap is transferred, held by a contract, or an app was given limited rights. To find a holder, follow the kiosk to whoever holds its cap.
 
-### Why not just use Sui's Move Registry (MVR) instead of a registry?
+### Why use Sui's Move Registry (MVR) instead of our own registry?
 
-Open question. MVR already holds package metadata and accepts custom keys, so the manifest link could live there. Trade-offs: MVR records are owned objects, so a contract can't check "is this package registered?" on chain; creating one needs the package's UpgradeCap; and it depends on MVR rather than our own package. It fits the ecosystem better and handles versions. Nothing is on mainnet, so this can still change.
+Decided: MVR. It already holds package metadata (names, source links, versions) and accepts custom keys, so the manifest link lives there as `continuum.manifest` and `continuum.manifest_hash`. What we give up: a contract can't check "is this package registered?" on chain. That check was close to useless, because anyone can register; contracts that need to restrict input check specific games or keep their own allowlist. Discovery happens off-chain either way. Packages that already destroyed their UpgradeCap can't create an MVR record; a fallback can be added if that ever matters.
 
 ### Why Sui first?
 

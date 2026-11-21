@@ -3,11 +3,11 @@
 ## Layers
 
 ```
-Discovery apps               read registry + indexer
+Discovery apps               read MVR records + indexer
   │
 Games (Suikoi, Gang Wars, …) own their packages, clients, servers
   │
-Continuum package            registry · provenance
+Continuum package            provenance
   │
 Sui objects                  owned by players
 ```
@@ -19,9 +19,9 @@ Games never call each other. They meet on the same owned objects.
 | Module | Objects | Entry points | Events |
 | --- | --- | --- | --- |
 | `provenance` | `Provenance` (store, drop), `Source` enum | `derive`, `claim` | `Derived`, `Claimed` |
-| `registry` | `Registry` (shared), `Entry`, `Manifest` | `register`, `update_manifest`, `set_latest` | `Registered`, `ManifestUpdated`, `LatestSet` |
+| `registry` *(being removed; manifest links move to MVR)* | `Registry` (shared), `Entry`, `Manifest` | `register`, `update_manifest`, `set_latest` | `Registered`, `ManifestUpdated`, `LatestSet` |
 
-Type names use **original package IDs** everywhere, so records and registry keys stay stable across upgrades.
+Type names use **original package IDs** everywhere, so provenance records stay stable across upgrades.
 
 ## Who signs what
 

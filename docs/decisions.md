@@ -4,6 +4,7 @@ Newest first. One line of why each.
 
 ## 2026-11-21
 
+- **Registry moves to Sui's Move Registry (MVR).** Games put `continuum.manifest` and `continuum.manifest_hash` in their MVR package metadata. Our `registry` module gets removed when continuum is published to testnet. The only thing lost is an on-chain "is registered" check, which is useless because registering is open to anyone; discovery happens off-chain (Hub, Scout, indexers) either way. MVR adds names, source links and version tracking.
 - **"Sidecar" renamed to "record"**: plainer word for a game's on-chain record about someone else's object.
 - **Docs rewritten for newcomers:** concepts page with one running example, diagrams per rule, FAQ and glossary.
 - **Manifest gets an optional `custody` block** (kiosk, locked, transfer policy). Kiosks and sale rules stay each collection's choice, outside the standard.

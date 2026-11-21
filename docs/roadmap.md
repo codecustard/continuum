@@ -5,7 +5,7 @@ The proof is two games sharing one object. The spec is written after, from what 
 | # | Step | Where | Status |
 | --- | --- | --- | --- |
 | 1 | `continuum` package: registry + provenance | this repo | ✅ Done (`ed85098`), not yet on testnet |
-| 2 | Publish `continuum` to testnet; fill `deployments/testnet.json` | this repo | Next |
+| 2 | Remove `registry` (moved to MVR), publish `continuum` to testnet; fill `deployments/testnet.json` | this repo | Next |
 | 3 | Koi package: `Koi`, mint, breed, open slot, lock, register | suikoi | Planned |
 | 4 | Game's register action mints on testnet | suikoi | Planned |
 | 5 | Indexer + snapshot for testnet resets | this repo | Planned |

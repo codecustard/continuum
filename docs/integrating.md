@@ -43,7 +43,7 @@ public fun cook<S: key>(source: &S, ctx: &mut TxContext): Dish {
 }
 ```
 
-Rule 3: in `init`, claim the `Publisher` with `package::claim(TINDAHAN {}, ctx)`, then call `registry::register` once with your manifest's URI and hash.
+Rule 3: after publishing, create your package's MVR record with your UpgradeCap (`@mvr/metadata::package_info::new`), then `set_metadata` the keys `continuum.manifest` (URI) and `continuum.manifest_hash` (hex hash).
 
 Attaching data to another game's object that has an open slot:
 
@@ -76,7 +76,7 @@ The record is shared and only your package can change it (gate writes with a cap
 ## Reading provenance
 
 ```move
-if (p.is_verified() && p.source_is<suikoi::koi::Koi>() && registry.contains(p.deriver_package())) { … }
+if (p.is_verified() && p.source_is<suikoi::koi::Koi>() && p.derived_by<tindahan::dish::Tindahan>()) { … }
 ```
 
 Which derivers to trust is your call; the standard doesn't decide it.
