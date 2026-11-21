@@ -20,7 +20,7 @@ With a plain field like `made_from: koi #123`, a copycat game can mint "Official
 
 With `derive(&koi)`, the real koi must be in the transaction. So it exists, Move has checked it really is a `Koi`, and its owner signed. The record also names which game made it, so readers can ignore games they don't trust.
 
-Examples: a Ryumon dragon proving it came from a real S-grade koi; Tindahan giving a bonus only to sushi cooked from a real rare koi; another game trusting that Gang Wars' "12 wins" record is about that actual One.
+Examples: a Ryumon dragon proving it came from a real S-grade koi; Tindahan giving a bonus only to a signature dish cooked in a real rare koi's pattern; another game trusting that Gang Wars' "12 wins" record is about that actual One.
 
 It doesn't stop the same koi being used twice; "one dragon per koi" is the game's own rule (a derived-object address keyed by the koi's ID is a neat way to enforce it).
 

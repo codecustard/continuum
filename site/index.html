@@ -225,25 +225,35 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 <section class="band" style="background:var(--soft)"><div class="wrap ex">
   <div>
     <h2>A second game, in a few lines</h2>
-    <p style="color:var(--muted)">A restaurant game cooks a dish from a koi and leaves a note on the koi itself. It never asked the koi game for anything.</p>
+    <p style="color:var(--muted)">A restaurant game shows off a player's koi, keeps a count of guests it charmed on the koi itself, and cooks a signature dish in its pattern. It never asked the koi game for anything.</p>
     <p style="color:var(--muted)">Collections that don't know about Continuum work too: keep a record your game owns that points at the item through <code>derive</code>.</p>
   </div>
   <div class="codebox">
     <button class="copy" type="button" id="copy">Copy</button>
 <pre id="excode"><code><span class="k">use</span> continuum::provenance::{Self, Provenance};
+<span class="k">use</span> sui::dynamic_field <span class="k">as</span> df;
 
 <span class="k">public struct</span> Tindahan <span class="k">has</span> drop {}            <span class="c">// your witness</span>
-<span class="k">public struct</span> FedSlot <span class="k">has</span> copy, drop, store {}
+<span class="k">public struct</span> GuestsCharmed <span class="k">has</span> copy, drop, store {}
 
 <span class="k">public struct</span> Dish <span class="k">has</span> key, store {
     id: UID,
     from: Provenance,
 }
 
-<span class="k">public fun</span> cook(koi: &amp;<span class="k">mut</span> Koi, ctx: &amp;<span class="k">mut</span> TxContext): Dish {
-    <span class="c">// leave our own data on their object</span>
-    dynamic_field::add(koi.uid_mut(), FedSlot {}, 1u64);
-    <span class="c">// make something new from it, with verified lineage</span>
+<span class="k">public fun</span> charm_guest(koi: &amp;<span class="k">mut</span> Koi) {
+    <span class="c">// keep our own count on their object</span>
+    <span class="k">let</span> uid = koi.uid_mut();
+    <span class="k">if</span> (df::exists_(uid, GuestsCharmed {})) {
+        <span class="k">let</span> n: &amp;<span class="k">mut</span> u64 = df::borrow_mut(uid, GuestsCharmed {});
+        *n = *n + 1;
+    } <span class="k">else</span> {
+        df::add(uid, GuestsCharmed {}, 1u64);
+    };
+}
+
+<span class="k">public fun</span> cook(koi: &amp;Koi, ctx: &amp;<span class="k">mut</span> TxContext): Dish {
+    <span class="c">// a signature dish in the koi's pattern, with verified lineage</span>
     <span class="k">let</span> from = provenance::derive(Tindahan {}, koi, ctx);
     Dish { id: object::new(ctx), from }
 }</code></pre>
@@ -297,7 +307,7 @@ document.getElementById('road').innerHTML=road.map(([s,a,b])=>`<tr><td><span cla
 const nodes=[
   {id:'koi',t:'Koi',s:'Suikoi',w:[60,60],n:[20,16]},
   {id:'slot',slot:1,t:'Tindahan’s slot on it',w:[84,138],n:[56,88]},
-  {id:'dish',t:'Dish',s:'Tindahan, cooked from the koi',w:[470,26],n:[150,150]},
+  {id:'dish',t:'Dish',s:'Tindahan, in the koi’s pattern',w:[470,26],n:[150,150]},
   {id:'dragon',t:'Dragon',s:'Suikoi, ascended from the koi',w:[470,150],n:[150,302]},
   {id:'badge',t:'Badge',s:'Any game, made from the dish',w:[880,26],n:[186,226]},
   {id:'one',t:'A collectible',s:'Collection that doesn’t know us',w:[60,286],n:[20,402]},

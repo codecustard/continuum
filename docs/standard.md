@@ -8,7 +8,7 @@ New to the terms? Read [concepts.md](concepts.md) first. The examples below use 
 
 ## Rule 1: Open slots
 
-**Why.** Sui lets any object carry extra data (dynamic fields), but only code that can reach the object's `UID` can attach it, and by default that's only the type's own module. If Tindahan wants to note "fed 3 times" on a koi, Suikoi has to let it.
+**Why.** Sui lets any object carry extra data (dynamic fields), but only code that can reach the object's `UID` can attach it, and by default that's only the type's own module. If Tindahan wants to keep a "guests charmed" count on a koi displayed at a player's restaurant, Suikoi has to let it.
 
 **What the object's author does.** Expose the `UID` through a function named `uid_mut`, with an owner lock:
 
@@ -29,19 +29,28 @@ public fun uid_mut(koi: &mut Koi): &mut UID {
 **What another game does.** Attach data under a key struct only it can create:
 
 ```move
-module tindahan::fed;
-public struct FedSlot has copy, drop, store {}   // no public constructor
+module tindahan::display;
+use sui::dynamic_field as df;
 
-public fun feed(koi: &mut Koi) {
-    sui::dynamic_field::add(koi.uid_mut(), FedSlot {}, 1u64);
+public struct GuestsCharmed has copy, drop, store {}   // slot key, no public constructor
+
+/// The koi charmed another guest at the player's restaurant.
+public fun charm_guest(koi: &mut Koi) {
+    let uid = koi.uid_mut();
+    if (df::exists_(uid, GuestsCharmed {})) {
+        let n: &mut u64 = df::borrow_mut(uid, GuestsCharmed {});
+        *n = *n + 1;
+    } else {
+        df::add(uid, GuestsCharmed {}, 1u64);   // add aborts if the field already exists
+    };
 }
 ```
 
 ```mermaid
 flowchart LR
   T[Tindahan's code] -->|"uid_mut()"| K[Koi]
-  K --- S[Tindahan's slot<br/>key: FedSlot]
-  X[Any other game] -. "can't create FedSlot" .-> S
+  K --- S[Tindahan's slot<br/>key: GuestsCharmed<br/>value: 120]
+  X[Any other game] -. "can't create GuestsCharmed" .-> S
 ```
 
 **What it guarantees.**
@@ -58,7 +67,7 @@ flowchart LR
 
 ## Rule 2: Verified provenance
 
-**Why.** When Tindahan cooks a Dish from a koi, anyone should be able to tell, without trusting Tindahan, that the Dish really came from that koi. A plain stored ID proves nothing; anyone can type an ID.
+**Why.** When Tindahan's chef cooks a signature Dish in a koi's pattern, anyone should be able to tell, without trusting Tindahan, that the Dish really came from that koi, so a rare koi's dish can't be faked. A plain stored ID proves nothing; anyone can type an ID.
 
 **What the making game does.** Call `derive` with the source in the same transaction and store the result:
 
@@ -69,6 +78,7 @@ public struct Tindahan has drop {}   // the game's witness, no public constructo
 
 public struct Dish has key, store { id: UID, from: Provenance }
 
+/// A signature dish in the koi's pattern. The koi isn't used up.
 public fun cook(koi: &Koi, ctx: &mut TxContext): Dish {
     Dish { id: object::new(ctx), from: provenance::derive(Tindahan {}, koi, ctx) }
 }

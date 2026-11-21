@@ -7,7 +7,7 @@ Continuum lets games build on each other's objects on Sui without asking permiss
 Four pieces, used on every page of these docs:
 
 - **Koi**: an object made by the game **Suikoi**. Suikoi follows the whole standard.
-- **Tindahan**: a second game. It cooks a **Dish** from a koi and leaves its own note on the koi.
+- **Tindahan**: a second game, a restaurant sim. A player displays their koi at the restaurant, and Tindahan keeps a "guests charmed" count on the koi. The chef also cooks a signature **Dish** in the koi's pattern.
 - **A One**: an NFT from **The Ones**, an outside collection that has never heard of Continuum.
 - **Gang Wars**: a game that keeps each One's wins in a **record** it owns.
 
@@ -15,7 +15,7 @@ Four pieces, used on every page of these docs:
 flowchart LR
   P([Player's wallet]) -->|owns| K[Koi<br/>made by Suikoi]
   P -->|owns| O[One<br/>outside collection]
-  K --- S[Tindahan's slot<br/>attached to the koi]
+  K --- S[Tindahan's slot<br/>guests charmed: 120]
   K -.->|"Tindahan derives"| D[Dish<br/>made by Tindahan]
   O -.-|"Gang Wars keeps"| R[Record<br/>owned by Gang Wars]
 ```
@@ -44,7 +44,7 @@ Only what you need for Continuum.
 | Needs the object's author to opt in | **Yes** (expose `uid_mut`) | No | No |
 | Who signs each write | The object's owner | The game | The game, after a one-time install |
 | Follows the object when it's sold | Yes | Yes (it points at the object's ID) | No, stays in the seller's kiosk |
-| Example | Tindahan's "fed 3 times" on a koi | Gang Wars' wins for One #123 | A game's per-kiosk settings |
+| Example | Tindahan's "guests charmed: 120" on a koi | Gang Wars' wins for One #123 | A game's per-kiosk settings |
 
 ```mermaid
 flowchart TB

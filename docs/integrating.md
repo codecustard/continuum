@@ -25,7 +25,7 @@ module tindahan::dish;
 use continuum::provenance::{Self, Provenance};
 
 public struct Tindahan has drop {}                     // provenance witness, no public constructor
-public struct FedSlot has copy, drop, store {}         // slot key, no public constructor
+public struct GuestsCharmed has copy, drop, store {}   // slot key, no public constructor
 
 public struct Dish has key, store {
     id: UID,
@@ -47,7 +47,13 @@ Rule 3: after publishing, create your package's MVR record with your UpgradeCap 
 Attaching data to another game's object that has an open slot:
 
 ```move
-sui::dynamic_field::add(koi.uid_mut(), FedSlot {}, times_fed);
+let uid = koi.uid_mut();
+if (sui::dynamic_field::exists_(uid, GuestsCharmed {})) {
+    let n: &mut u64 = sui::dynamic_field::borrow_mut(uid, GuestsCharmed {});
+    *n = *n + 1;
+} else {
+    sui::dynamic_field::add(uid, GuestsCharmed {}, 1u64);   // add aborts if it already exists
+};
 ```
 
 ## Existing game
