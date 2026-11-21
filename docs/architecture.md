@@ -69,7 +69,7 @@ Assets stay on their own chain. Shared state (records, slots, lineage) lives on 
 
 ## Off-chain pieces (planned)
 
-- **Indexer:** follows `Derived`, `Claimed`, `Registered` and game events; builds lineage; keeps the testnet snapshot.
+- **Indexer:** follows `Derived` and `Claimed` events, MVR records carrying `continuum.manifest`, and game events; builds lineage; keeps the testnet snapshot.
 - **TypeScript SDK:** read helpers and transaction builders (`derive` with Kiosk borrow, slot reads).
 - **A discovery hub, MCP server and API:** discovery for people and agents.
 
