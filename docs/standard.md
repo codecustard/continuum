@@ -32,6 +32,7 @@ A game registers its package in the shared `continuum::registry::Registry`:
 - Points at a **manifest** (Walrus or GitHub) with its 32-byte hash. Format: [`manifest/schema.json`](../manifest/schema.json).
 - The manifest says what the game's fields mean, which types it makes and reads, and the license for its art and data.
 - No names on chain. Trust follows the package ID.
+- Optional `custody` block: whether objects sit in Kiosks, whether they're locked, and the transfer policy. Information only; it tells other games to use `borrow_val`/`return_val` and that they can't move the object.
 
 ## Left out on purpose
 

@@ -2,6 +2,10 @@
 
 Newest first. One line of why each.
 
+## 2026-11-21
+
+- **Manifest gets an optional `custody` block** (kiosk, locked, transfer policy). Kiosks and sale rules stay each collection's choice, outside the standard.
+
 ## 2026-11-20
 
 - **Attested tier deferred.** Design from a real cross-chain case; ship as its own module, not a new `Source` variant.

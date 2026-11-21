@@ -4,24 +4,58 @@
   "title": "Continuum game manifest v0",
   "description": "Describes a registered package: what it makes, what it reads, what its slot fields mean, and the license for its art and data. Its hash is stored in continuum::registry.",
   "type": "object",
-  "required": ["version", "name", "package", "types", "license"],
+  "required": [
+    "version",
+    "name",
+    "package",
+    "types",
+    "license"
+  ],
   "properties": {
-    "version": { "const": 0 },
-    "name": { "type": "string", "description": "Display name. Not trusted: trust follows the package ID." },
-    "package": { "type": "string", "pattern": "^0x[0-9a-f]{64}$", "description": "Original package ID; must match the registry key." },
-    "description": { "type": "string" },
-    "homepage": { "type": "string", "format": "uri" },
-    "source": { "type": "string", "format": "uri", "description": "Source repository." },
+    "version": {
+      "const": 0
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name. Not trusted: trust follows the package ID."
+    },
+    "package": {
+      "type": "string",
+      "pattern": "^0x[0-9a-f]{64}$",
+      "description": "Original package ID; must match the registry key."
+    },
+    "description": {
+      "type": "string"
+    },
+    "homepage": {
+      "type": "string",
+      "format": "uri"
+    },
+    "source": {
+      "type": "string",
+      "format": "uri",
+      "description": "Source repository."
+    },
     "types": {
       "type": "array",
       "description": "Object types this package defines.",
       "items": {
         "type": "object",
-        "required": ["type"],
+        "required": [
+          "type"
+        ],
         "properties": {
-          "type": { "type": "string", "description": "module::Struct" },
-          "open_slots": { "type": "boolean", "description": "Exposes uid_mut for other games' slots." },
-          "fields": { "$ref": "#/$defs/fields" }
+          "type": {
+            "type": "string",
+            "description": "module::Struct"
+          },
+          "open_slots": {
+            "type": "boolean",
+            "description": "Exposes uid_mut for other games' slots."
+          },
+          "fields": {
+            "$ref": "#/$defs/fields"
+          }
         }
       }
     },
@@ -30,40 +64,96 @@
       "description": "Slots this package attaches to other games' objects.",
       "items": {
         "type": "object",
-        "required": ["key", "on"],
+        "required": [
+          "key",
+          "on"
+        ],
         "properties": {
-          "key": { "type": "string", "description": "module::KeyStruct (no public constructor)." },
-          "on": { "type": "string", "description": "Full type the slot attaches to, 0x…::module::Struct." },
-          "fields": { "$ref": "#/$defs/fields" }
+          "key": {
+            "type": "string",
+            "description": "module::KeyStruct (no public constructor)."
+          },
+          "on": {
+            "type": "string",
+            "description": "Full type the slot attaches to, 0x\u2026::module::Struct."
+          },
+          "fields": {
+            "$ref": "#/$defs/fields"
+          }
         }
       }
     },
     "reads": {
       "type": "array",
       "description": "Outside types or CAIP-19 collections this package reads or derives from.",
-      "items": { "type": "string" }
+      "items": {
+        "type": "string"
+      }
     },
-    "witness": { "type": "string", "description": "module::Witness used with continuum::provenance." },
+    "witness": {
+      "type": "string",
+      "description": "module::Witness used with continuum::provenance."
+    },
     "license": {
       "type": "object",
-      "required": ["art", "data"],
+      "required": [
+        "art",
+        "data"
+      ],
       "properties": {
-        "art": { "type": "string", "description": "SPDX ID or URL, e.g. CC0-1.0." },
-        "data": { "type": "string", "description": "SPDX ID or URL for on-chain fields and state." }
+        "art": {
+          "type": "string",
+          "description": "SPDX ID or URL, e.g. CC0-1.0."
+        },
+        "data": {
+          "type": "string",
+          "description": "SPDX ID or URL for on-chain fields and state."
+        }
+      }
+    },
+    "custody": {
+      "type": "object",
+      "description": "Optional. How the objects are held and moved, so other games know what they can do. Information only.",
+      "properties": {
+        "kiosk": {
+          "type": "boolean",
+          "description": "Objects are held in Sui Kiosks; take out with kiosk::borrow_val and put back in the same transaction."
+        },
+        "locked": {
+          "type": "boolean",
+          "description": "Objects are locked in kiosks: they leave only through a sale that passes the transfer policy."
+        },
+        "transfer_policy": {
+          "type": "string",
+          "pattern": "^0x[0-9a-f]{64}$",
+          "description": "TransferPolicy object ID, if any."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Plain words on sale rules or exits, e.g. royalty, ascension path."
+        }
       }
     }
   },
   "$defs": {
     "fields": {
       "type": "object",
-      "description": "Field name → meaning.",
+      "description": "Field name \u2192 meaning.",
       "additionalProperties": {
         "type": "object",
-        "required": ["type"],
+        "required": [
+          "type"
+        ],
         "properties": {
-          "type": { "type": "string" },
-          "meaning": { "type": "string" },
-          "range": { "type": "string" }
+          "type": {
+            "type": "string"
+          },
+          "meaning": {
+            "type": "string"
+          },
+          "range": {
+            "type": "string"
+          }
         }
       }
     }
