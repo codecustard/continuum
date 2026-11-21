@@ -14,7 +14,7 @@ Left out on purpose: trust and anti-cheat, balance, economy, and shared field na
 
 ## Docs
 
-Standard, architecture, integration guide, decisions and roadmap: [`docs/`](docs/).
+New here? Start with [`docs/concepts.md`](docs/concepts.md). Everything else is in [`docs/`](docs/).
 
 ## Package
 

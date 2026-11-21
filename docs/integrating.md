@@ -54,11 +54,11 @@ sui::dynamic_field::add(koi.uid_mut(), FedSlot {}, times_fed);
 ## Existing game
 
 - **Already on Sui:** a compatible upgrade can add new public functions. Add `uid_mut` and a lock to your types, claim or reuse your `Publisher`, and register. No migration.
-- **Off-chain game:** start at level 0 or 1. Write your results into sidecars.
+- **Off-chain game:** start at level 0 or 1. Write your results into records.
 
 ## Collections that don't know about Continuum
 
-Use a sidecar your game owns:
+Use a record your game owns:
 
 ```move
 public struct Record has key { id: UID, of: Provenance, wins: u64 }

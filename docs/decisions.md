@@ -4,6 +4,8 @@ Newest first. One line of why each.
 
 ## 2026-11-21
 
+- **"Sidecar" renamed to "record"**: plainer word for a game's on-chain record about someone else's object.
+- **Docs rewritten for newcomers:** concepts page with one running example, diagrams per rule, FAQ and glossary.
 - **Manifest gets an optional `custody` block** (kiosk, locked, transfer policy). Kiosks and sale rules stay each collection's choice, outside the standard.
 
 ## 2026-11-20
@@ -11,7 +13,7 @@ Newest first. One line of why each.
 - **Attested tier deferred.** Design from a real cross-chain case; ship as its own module, not a new `Source` variant.
 - **One home chain (Sui) for shared state;** assets stay on their own chains, nothing bridged.
 - **Project site on GitHub Pages** from `site/`, deployed by Actions. One static page aimed at builders; neutral wording.
-- **Seamless play:** chain only at key moments; zkLogin + sponsored gas by default; sidecars belong to the game so updates need no player signature.
+- **Seamless play:** chain only at key moments; zkLogin + sponsored gas by default; records belong to the game so updates need no player signature.
 
 ## 2026-11-19
 
@@ -30,6 +32,6 @@ Newest first. One line of why each.
 ## 2026-11-15 and earlier
 
 - **Standard = three rules:** open slots, verified provenance, registry + manifest. No shared field names, trust or economy.
-- **Collections we don't own get sidecars** pointing at the source via `derive` (or CAIP-19 `claim` off-Sui).
+- **Collections we don't own get records** (first called sidecars) pointing at the source via `derive` (or CAIP-19 `claim` off-Sui).
 - **Minting is permissionless;** an origin stamp separates server-verified from open.
 - **Testnet first** with an indexer snapshot for wipes.

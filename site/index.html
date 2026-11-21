@@ -291,7 +291,7 @@ const nodes=[
   {id:'badge',t:'Badge',s:'Any game, made from the dish',w:[880,26],n:[186,226]},
   {id:'one',t:'A collectible',s:'Collection that doesn’t know us',w:[60,286],n:[20,402]},
   {id:'eth',t:'Item on another chain',s:'eip155:1/erc721:0x…/771',w:[60,386],n:[20,560]},
-  {id:'rec',t:'Record',s:'A fan game’s sidecar',w:[470,336],n:[150,478]}
+  {id:'rec',t:'Record',s:'A fan game’s record',w:[470,336],n:[150,478]}
 ];
 const edges=[['koi','dish','derive'],['koi','dragon','derive'],['dish','badge','derive'],['one','rec','derive'],['eth','rec','claim'],['slot','koi','slot-l']];
 const svg=document.getElementById('ped'),fig=document.getElementById('fig');

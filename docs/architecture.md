@@ -29,7 +29,7 @@ Type names use **original package IDs** everywhere, so records and registry keys
 | --- | --- | --- |
 | Read any object | Nobody | Always free |
 | `derive` from an owned object | Its owner | At on-chain moments only (mint, breed, enlist) |
-| Write to your own sidecar | Your game | Every update, no player prompt |
+| Write to your own record | Your game | Every update, no player prompt |
 | Attach a slot via `uid_mut` | The object's owner | Rare |
 | `register` / `update_manifest` | Package publisher | Once, then on manifest changes |
 
@@ -37,8 +37,8 @@ Type names use **original package IDs** everywhere, so records and registry keys
 
 - **Chain only for moments that matter.** Moment-to-moment play stays off-chain; anything the client can fake earns only off-chain rewards.
 - **zkLogin + sponsored gas.** Players sign in with a social account; a short-lived key signs in the background and the game pays gas. No wallet popups, no gas token needed.
-- **One transaction per moment.** Programmable transactions batch steps, e.g. Kiosk `borrow_val` → `derive` → create sidecar → `return_val` is one approval.
-- **Sidecars belong to the game.** After a one-time enlist, the game writes results without asking the player.
+- **One transaction per moment.** Programmable transactions batch steps, e.g. Kiosk `borrow_val` → `derive` → create record → `return_val` is one approval.
+- **Records belong to the game.** After a one-time enlist, the game writes results without asking the player.
 
 Wallet users see one prompt per on-chain moment; zkLogin users see none.
 
@@ -62,7 +62,7 @@ Assets stay on their own chain. Shared state (records, slots, lineage) lives on 
 
 1. The player links a wallet on that chain to their Sui account by signing once. *(planned: account link record)*
 2. An attester checks ownership on that chain and signs it.
-3. A sidecar on Sui points at the item's CAIP-19 ID and holds the game's data.
+3. A record on Sui points at the item's CAIP-19 ID and holds the game's data.
 4. Ownership can change on the other chain, so games re-check when it matters.
 
 **Why one home chain:** one place to read, one family tree. The rules and CAIP-19 IDs don't depend on Sui, so a move is possible later.
