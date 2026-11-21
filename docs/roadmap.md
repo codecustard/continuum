@@ -21,3 +21,20 @@ The proof is two games sharing one object. The spec is written after, from what 
 - Collection ID for The Ones.
 - Which Koi fields count as shared core.
 - Mainnet timing (after review).
+
+## Later: games built without Move (after Gang Wars results)
+
+AI-built and vibe-coded games mostly won't write Move. Idea: a hosted `continuum::records` module.
+
+- A game registers and gets a `GameCap`; the cap stands in for the witness.
+- Records derive from any object and hold generic key/value data; the manifest says what keys mean.
+- Creating a record needs the player's object and the game's approval in one transaction: the game's server signs a ticket (player, object, game) checked on chain. Later writes need only the cap.
+- Registry gets a second table keyed by `GameCap` ID (addable by upgrade).
+- Agent-friendly: MCP server, `AGENTS.md`, `llms.txt`, a starter template.
+
+Open, with current leanings:
+
+- **Who holds the GameCap?** Leaning: either; a platform can create and hold caps for its games, and the creator can claim theirs anytime.
+- **Records data:** Leaning: key/value only. Games that write Move already get typed data through their own package plus `derive`.
+- **Who pays gas at scale?** Leaning: each game or platform sponsors its own; Continuum covers its own games and a few early partners.
+
