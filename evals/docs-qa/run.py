@@ -3,7 +3,7 @@
 
   python3 evals/docs-qa/run.py --self-test
   python3 evals/docs-qa/run.py --answers my_answers.jsonl
-  python3 evals/docs-qa/run.py --model 'claude -p'                 # prompt on stdin
+  python3 evals/docs-qa/run.py --model 'claude -p' --trials 3     # prompt on stdin
   python3 evals/docs-qa/run.py --model 'claude -p' --judge 'claude -p'
 
 Each question lists key facts. Default judge: a fact counts if any of its
@@ -72,6 +72,7 @@ def main():
     g.add_argument("--answers")
     g.add_argument("--model")
     ap.add_argument("--judge")
+    ap.add_argument("--trials", type=int, default=3, help="answers per question with --model")
     ap.add_argument("--out", default=str(HERE / "results.json"))
     a = ap.parse_args()
     qs = load(HERE / "questions.jsonl")
@@ -91,17 +92,45 @@ def main():
         sys.exit(0 if ok else 1)
 
     if a.answers:
-        answers = {x["id"]: x["answer"] for x in load(a.answers)}
-    else:
-        d = docs_text()
+        rows = score(qs, {x["id"]: x["answer"] for x in load(a.answers)}, a.judge)
+        n = report(rows)
+        Path(a.out).write_text(json.dumps(rows, indent=2))
+        sys.exit(0 if n == len(rows) else 1)
+
+    # --model: ask each question several times; answers vary between runs.
+    d = docs_text()
+    trials = []
+    for t in range(a.trials):
         answers = {}
         for q in qs:
-            answers[q["id"]] = ask(a.model, d, q["question"])
-            print(f"asked {q['id']}", file=sys.stderr)
-    rows = score(qs, answers, a.judge)
-    n = report(rows)
-    Path(a.out).write_text(json.dumps(rows, indent=2))
-    sys.exit(0 if n == len(rows) else 1)
+            try:
+                answers[q["id"]] = ask(a.model, d, q["question"])
+            except Exception as e:
+                answers[q["id"]] = None
+                print(f"error {q['id']} trial {t + 1}: {e}", file=sys.stderr)
+        ok = {k: v for k, v in answers.items() if v is not None}
+        trials.append({r["id"]: r for r in score([q for q in qs if q["id"] in ok], ok, a.judge)})
+    print(f"{'question':<20}{'pass rate':>10}  most missed fact")
+    summary = []
+    for q in qs:
+        rs = [t[q["id"]] for t in trials if q["id"] in t]
+        c = sum(r["passed"] for r in rs)
+        missed = {}
+        for r in rs:
+            for f, hit in r["facts"]:
+                if not hit:
+                    missed[f] = missed.get(f, 0) + 1
+        top = max(missed.items(), key=lambda x: x[1]) if missed else ("", 0)
+        rate = round(c / len(rs), 2) if rs else None
+        summary.append({"id": q["id"], "graded": len(rs), "passes": c, "pass_rate": rate, "missed": missed,
+                        "answers": [r["answer"] for r in rs]})
+        print(f"{q['id']:<20}{'-' if rate is None else f'{c}/{len(rs)}':>10}  {top[0] + (' ×' + str(top[1]) if top[1] else '')}")
+    graded = [s for s in summary if s["graded"]]
+    overall = round(sum(s["passes"] for s in graded) / sum(s["graded"] for s in graded), 2) if graded else None
+    print(f"\noverall pass rate {overall} over {a.trials} trials")
+    Path(a.out).write_text(json.dumps({"model": a.model, "judge": a.judge, "trials": a.trials,
+                                       "overall": overall, "questions": summary}, indent=2))
+    sys.exit(0 if overall == 1.0 else 1)
 
 
 if __name__ == "__main__":
