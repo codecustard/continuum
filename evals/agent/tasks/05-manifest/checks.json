@@ -1,0 +1,1 @@
+{"files": ["manifest.json"], "manifest": {"types": ["mural::Mural", "kitchen::Dish", "record::CardRecord"], "slots_key": ["display::GuestsCharmed"], "slots_on": ["koi::Koi"], "reads": ["card::Card"]}}

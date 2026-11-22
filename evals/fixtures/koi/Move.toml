@@ -1,0 +1,4 @@
+[package]
+name = "koi"
+edition = "2024"
+license = "MIT"

@@ -1,0 +1,8 @@
+[package]
+name = "game"
+edition = "2024"
+
+[dependencies]
+continuum = { local = "../deps/continuum" }
+koi = { local = "../deps/koi" }
+card = { local = "../deps/card" }

@@ -1,0 +1,12 @@
+{"id": "slot-who", "answer": "No. Fields and the UID are private to Suikoi's module, so Suikoi must expose uid_mut (Rule 1), with an owner lock; then other games attach slots under their own key types when the owner signs."}
+{"id": "key-you", "answer": "The code: the module that defines the key struct, not a person or wallet."}
+{"id": "prov-vs-id", "answer": "A plain ID is only a claim. derive requires the real object in the transaction, so it exists and is type-checked, and records which game (witness) made the new thing."}
+{"id": "prov-dup", "answer": "No. One-per-koi is the game's own rule, e.g. a derived-object address keyed by the koi's ID."}
+{"id": "history", "answer": "Move contracts can't read history, only objects passed in; and history doesn't say which input was the source or which game vouches for it."}
+{"id": "retire-freeze", "answer": "It's frozen (public_freeze_object), not deleted, via the author's retire function, so provenance, parent links and slots pointing at it stay valid and it can't return to play."}
+{"id": "retire-order", "answer": "Derive first (while it still has the koi), then call the koi author's retire."}
+{"id": "retire-vs-transfer", "answer": "No. A transfer needs no author help and the object stays live (the game could resell it). Retire is enforced by the type's own code and provably out of play."}
+{"id": "record", "answer": "An object the game owns that points at someone else's object through derive and holds its data about it. Use it when the author didn't adopt Rule 1, i.e. most existing collections."}
+{"id": "kiosk", "answer": "No, it's each collection's choice. Games borrow it out and return it in the same transaction (kiosk::borrow_val / return_val)."}
+{"id": "mvr", "answer": "In Sui's Move Registry (MVR) package metadata under continuum.manifest and continuum.manifest_hash. Lost: an on-chain 'is registered' check, which was near useless since anyone could register."}
+{"id": "no-change", "answer": "Yes: reading, provenance and records work on any Sui object. Only slots need the author to expose uid_mut."}

@@ -1,0 +1,12 @@
+{"id": "slot-who", "answer": "Yes, any game can add dynamic fields to any object directly."}
+{"id": "key-you", "answer": "The wallet that published the package."}
+{"id": "prov-vs-id", "answer": "There's no real difference; it just stores the ID."}
+{"id": "prov-dup", "answer": "Yes, derive can only be called once per koi."}
+{"id": "history", "answer": "It is enough; we don't need provenance."}
+{"id": "retire-freeze", "answer": "It's deleted so it can't be used again."}
+{"id": "retire-order", "answer": "Retire first, then derive."}
+{"id": "retire-vs-transfer", "answer": "Yes, it's the same as a transfer."}
+{"id": "record", "answer": "A record is a row in the game's database."}
+{"id": "kiosk", "answer": "Yes, every item must be in a kiosk."}
+{"id": "mvr", "answer": "In Continuum's own registry contract."}
+{"id": "no-change", "answer": "No, the collection must upgrade to support Continuum."}

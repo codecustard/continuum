@@ -4,6 +4,7 @@ Newest first. One line of why each.
 
 ## 2026-11-21
 
+- **Evals in the repo.** An agent integration eval (5 tasks, hidden tests, reference and broken solutions) and a docs comprehension eval. Agents will build most integrations, so "can an agent get it right from the docs alone" is the usability test that matters. Failures are treated as docs or API bugs.
 - **Draft Rule 4: Retire.** Using up another game's object is central to interop, so it's designed in now: the type's author offers `retire`; retire freezes instead of deleting; the output derives from the input; one `Retired { id, by, into }` event; a `retire` block in the manifest. Named "retire" because it's neutral and covers freeze or delete; games use their own UI words (cook, enshrine).
 - **Registry moves to Sui's Move Registry (MVR).** Games put `continuum.manifest` and `continuum.manifest_hash` in their MVR package metadata. Our `registry` module gets removed when continuum is published to testnet. The only thing lost is an on-chain "is registered" check, which is useless because registering is open to anyone; discovery happens off-chain (Hub, Scout, indexers) either way. MVR adds names, source links and version tracking.
 - **"Sidecar" renamed to "record"**: plainer word for a game's on-chain record about someone else's object.

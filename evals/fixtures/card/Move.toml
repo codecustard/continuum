@@ -1,0 +1,4 @@
+[package]
+name = "card"
+edition = "2024"
+license = "MIT"

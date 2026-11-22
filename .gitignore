@@ -3,3 +3,4 @@ build/
 .trace
 .coverage*
 node_modules/
+evals/*/results.json

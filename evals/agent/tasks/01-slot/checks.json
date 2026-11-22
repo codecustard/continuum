@@ -1,0 +1,1 @@
+{"files": ["sources/display.move"], "require": ["uid_mut"], "forbid_ctor": ["GuestsCharmed"]}

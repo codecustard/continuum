@@ -15,6 +15,8 @@ The proof is two games sharing one object. The spec is written after, from what 
 | 9 | One-page spec from what the games used | this repo | Planned |
 | 10 | Freeze `continuum` (make immutable) after the proof | this repo | Planned |
 
+Evals ([evals/](../evals/)) run before each publish; see when to run in its README.
+
 ## Open questions
 
 - Order of tracks: Gang Wars MVP vs Koi package after step 2.

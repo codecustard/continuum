@@ -1,0 +1,34 @@
+{
+  "version": 0,
+  "name": "Eval game",
+  "package": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "types": [
+    {
+      "type": "mural::Mural",
+      "fields": {
+        "from": {
+          "type": "Provenance",
+          "meaning": "Verified link to the koi it was painted from"
+        }
+      }
+    },
+    {
+      "type": "kitchen::Dish",
+      "fields": {
+        "from": {
+          "type": "Provenance",
+          "meaning": "Verified link to the koi it was cooked from"
+        }
+      }
+    }
+  ],
+  "reads": [
+    "koi::koi::Koi",
+    "card::card::Card"
+  ],
+  "witness": "mural::Game",
+  "license": {
+    "art": "MIT",
+    "data": "CC0-1.0"
+  }
+}

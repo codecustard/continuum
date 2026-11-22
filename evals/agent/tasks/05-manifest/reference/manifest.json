@@ -1,0 +1,16 @@
+{
+  "version": 0,
+  "name": "Eval game",
+  "package": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "types": [
+    {"type": "mural::Mural", "fields": {"from": {"type": "Provenance", "meaning": "Verified link to the koi it was painted from"}}},
+    {"type": "kitchen::Dish", "fields": {"from": {"type": "Provenance", "meaning": "Verified link to the koi it was cooked from"}}},
+    {"type": "record::CardRecord", "fields": {"of": {"type": "Provenance", "meaning": "Verified link to the card"}, "wins": {"type": "u64", "meaning": "Battles won"}}}
+  ],
+  "slots": [
+    {"key": "display::GuestsCharmed", "on": "koi::koi::Koi", "fields": {"value": {"type": "u64", "meaning": "Guests the koi charmed at the restaurant"}}}
+  ],
+  "reads": ["koi::koi::Koi", "card::card::Card"],
+  "witness": "mural::Game",
+  "license": {"art": "CC0-1.0", "data": "CC0-1.0"}
+}
