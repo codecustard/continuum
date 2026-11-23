@@ -133,7 +133,7 @@ flowchart LR
 ```
 
 - `witness` lists every witness type your modules pass to `derive` or `claim` (here two modules each have one).
-- `types` lists every object type your package defines, caps included (say what a cap allows in a field-less entry's description if you need one). Short field type names like `Provenance` are fine.
+- `types` lists every object type your package defines, caps included. Short field type names like `Provenance` are fine.
 - Leave out `id: UID` in `fields`. A slot that holds a plain value (a `u64` count, a `bool`) gets one field named `value`.
 - Leave out a type's `retire` block if it can't be retired; that means `no`.
 - Outside types use the **original package ID** (`0x…::koi::Koi`). While a dependency isn't published yet, write `koi::koi::Koi`; replace it with the real ID before you link the manifest in MVR.
