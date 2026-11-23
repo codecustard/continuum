@@ -4,8 +4,8 @@ The proof is two games sharing one object. The spec is written after, from what 
 
 | # | Step | Where | Status |
 | --- | --- | --- | --- |
-| 1 | `continuum` package: registry + provenance | this repo | ✅ Done (`ed85098`), not yet on testnet |
-| 2 | Remove `registry` (moved to MVR), publish `continuum` to testnet; fill `deployments/testnet.json` | this repo | Next |
+| 1 | `continuum` package: registry + provenance | this repo | ✅ Done (`ed85098`) |
+| 2 | Remove `registry` (moved to MVR), publish `continuum` to testnet; fill `deployments/testnet.json` | this repo | ✅ Done, Nov 23: `0xc2d9…96e8` |
 | 3 | Koi package: `Koi`, mint, breed, open slot, lock, MVR manifest metadata (`continuum.manifest`, `continuum.manifest_hash`) | suikoi | Planned |
 | 4 | Game mints on testnet; MVR manifest metadata (`continuum.manifest`, `continuum.manifest_hash`) set | suikoi | Planned |
 | 5 | Indexer + snapshot for testnet resets | this repo | Planned |

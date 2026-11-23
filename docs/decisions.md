@@ -2,6 +2,10 @@
 
 Newest first. One line of why each.
 
+## 2026-11-23
+
+- **Registry removed; continuum published to testnet.** Package `0xc2d92a3cea069c9f967f9c913991f2565bf5b073b581c5178f9dba12302796e8`, epoch 1292, one module (`provenance`). Manifests link through MVR metadata. The UpgradeCap stays with a deployer address until it moves to the maintainer's own wallet; details in `deployments/testnet.json`. Kept upgradeable on testnet; freeze after the two-game proof (roadmap step 10).
+
 ## 2026-11-21
 
 - **Evals in the repo.** An agent integration eval (5 tasks, hidden tests, reference and broken solutions) and a docs comprehension eval. Agents will build most integrations, so "can an agent get it right from the docs alone" is the usability test that matters. Failures are treated as docs or API bugs.

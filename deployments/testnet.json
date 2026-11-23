@@ -1,7 +1,12 @@
 {
   "network": "testnet",
   "continuum": {
-    "package": null,
-    "published_epoch": null
+    "package": "0xc2d92a3cea069c9f967f9c913991f2565bf5b073b581c5178f9dba12302796e8",
+    "published_epoch": 1292,
+    "published_at": "2026-11-23T05:43:44Z",
+    "digest": "5S3KW1r6i1ijJ887Q5LymrniAzi9RUi9ZV9Th3Lnriav",
+    "modules": ["provenance"],
+    "upgrade_cap": "0xabf0864c08846c87d00dce504eca065dd414c76610c53125a75dddec28ca41ea",
+    "upgrade_cap_owner": "0xf687fd9e00cdae8ad2e0259bb2fbdfe6a3db8b655b24f5cf4b4eaf5423c41da3"
   }
 }
