@@ -5,8 +5,11 @@
     "published_epoch": 1292,
     "published_at": "2026-11-23T05:43:44Z",
     "digest": "5S3KW1r6i1ijJ887Q5LymrniAzi9RUi9ZV9Th3Lnriav",
-    "modules": ["provenance"],
+    "modules": [
+      "provenance"
+    ],
     "upgrade_cap": "0xabf0864c08846c87d00dce504eca065dd414c76610c53125a75dddec28ca41ea",
-    "upgrade_cap_owner": "0xf687fd9e00cdae8ad2e0259bb2fbdfe6a3db8b655b24f5cf4b4eaf5423c41da3"
+    "upgrade_cap_owner": "0x3d4f3a241aeff91a9b663d29433162adc833323acdeaab12e65dbf018bf66365",
+    "upgrade_cap_transfer": "6RFzoRE6Fpz1ZZEPb8n9JjCS5wf14qHv1bHBEDGxVyyk"
   }
 }

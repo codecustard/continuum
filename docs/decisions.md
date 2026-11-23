@@ -16,7 +16,7 @@ Newest first. One line of why each.
 
   The one failure: `manifest.json` written to the wrong folder (task wording, #5). Agents' notes found docs/schema gaps that didn't fail checks: one `witness` per manifest (#1, 5 of 5 manifest trials), no guidance for unpublished dependency IDs (#2), deprecated `df::exists_` in snippets (#3), bare-value slot fields (#4). Caveats: same model family as the session that wrote the docs; agents were told, not forced, to stay in their folder; only their final notes were kept, not full transcripts.
 
-- **Registry removed; continuum published to testnet.** Package `0xc2d92a3cea069c9f967f9c913991f2565bf5b073b581c5178f9dba12302796e8`, epoch 1292, one module (`provenance`). Manifests link through MVR metadata. The UpgradeCap stays with a deployer address until it moves to the maintainer's own wallet; details in `deployments/testnet.json`. Kept upgradeable on testnet; freeze after the two-game proof (roadmap step 10).
+- **Registry removed; continuum published to testnet.** Package `0xc2d92a3cea069c9f967f9c913991f2565bf5b073b581c5178f9dba12302796e8`, epoch 1292, one module (`provenance`). Manifests link through MVR metadata. The UpgradeCap is held by the maintainer's dev wallet (`0x3d4f…6365`, a seed-phrase account kept separate from personal wallets); details in `deployments/testnet.json`. Kept upgradeable on testnet; freeze after the two-game proof (roadmap step 10).
 
 ## 2026-11-21
 
