@@ -1,0 +1,26 @@
+{
+  "stamp": "20261123-061752-719",
+  "commit": "f0cf917",
+  "label": "claude-opus-5.5 (subagent), after fixes #1-#5",
+  "mode": "agent",
+  "agent": null,
+  "trials": 5,
+  "k": 5,
+  "overall_pass@1": 1.0,
+  "tasks": [
+    {
+      "task": "05-manifest",
+      "trials": 5,
+      "graded": 5,
+      "errors": 0,
+      "passes": 5,
+      "pass@1": 1.0,
+      "pass@5": 1.0,
+      "pass^5": 1.0,
+      "partial": 1.0,
+      "failed_checks": {},
+      "mean_seconds": 0.0,
+      "mean_cost_usd": null
+    }
+  ]
+}

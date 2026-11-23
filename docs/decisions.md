@@ -4,6 +4,7 @@ Newest first. One line of why each.
 
 ## 2026-11-23
 
+- **Fixed the gaps the eval found (#1–#5); manifest task reran at 5/5** (pass^5 1.00, up from 0.00). `witness` takes a list; docs cover unpublished dependency IDs, plain-value slots, caps and omitted `retire`. Summary in `evals/agent/history/2026-11-23-manifest-rerun.json`.
 - **First real-agent eval run: pass@1 0.96 (24/25).** Claude Opus 5.5 as a subagent, 5 trials per task, docs only, hidden tests. Summary in `evals/agent/history/2026-11-23-opus-5.5-subagent.json`.
 
   | Task | pass@1 | pass@5 | pass^5 |
