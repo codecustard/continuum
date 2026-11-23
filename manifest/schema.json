@@ -100,7 +100,7 @@
           },
           "on": {
             "type": "string",
-            "description": "Full type the slot attaches to, 0x\u2026::module::Struct."
+            "description": "Full type the slot attaches to, 0x\u2026::module::Struct (original package ID). Before that package is published, package::module::Struct is fine; replace it before you link the manifest in MVR."
           },
           "fields": {
             "$ref": "#/$defs/fields"
@@ -110,14 +110,26 @@
     },
     "reads": {
       "type": "array",
-      "description": "Outside types or CAIP-19 collections this package reads or derives from.",
+      "description": "Outside types (0x\u2026::module::Struct, original package ID) or CAIP-19 collections this package reads or derives from. Before a dependency is published, package::module::Struct is fine; replace it before you link the manifest in MVR.",
       "items": {
         "type": "string"
       }
     },
     "witness": {
-      "type": "string",
-      "description": "module::Witness used with continuum::provenance."
+      "description": "The witness type(s) your modules pass to continuum::provenance, as module::Witness. A string for one, or a list when modules use different witnesses (e.g. mural::Game, kitchen::Kitchen).",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      ]
     },
     "license": {
       "type": "object",
@@ -163,7 +175,7 @@
   "$defs": {
     "fields": {
       "type": "object",
-      "description": "Field name \u2192 meaning.",
+      "description": "Field name \u2192 meaning. Leave out id: UID. For a slot whose value is a plain value (u64, bool, String) rather than a struct, use one field named value.",
       "additionalProperties": {
         "type": "object",
         "required": [

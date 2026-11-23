@@ -244,7 +244,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 <span class="k">public fun</span> charm_guest(koi: &amp;<span class="k">mut</span> Koi) {
     <span class="c">// keep our own count on their object</span>
     <span class="k">let</span> uid = koi.uid_mut();
-    <span class="k">if</span> (df::exists_(uid, GuestsCharmed {})) {
+    <span class="k">if</span> (df::exists(uid, GuestsCharmed {})) {
         <span class="k">let</span> n: &amp;<span class="k">mut</span> u64 = df::borrow_mut(uid, GuestsCharmed {});
         *n = *n + 1;
     } <span class="k">else</span> {

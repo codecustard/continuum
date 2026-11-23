@@ -1,5 +1,0 @@
-2026-11-23T05:39:59.833240Z  WARN sui_package_alt::sui_flavor: Failed to query protocol version: Failed to query protocol config. Falling back to protocol version 142.
-2026-11-23T05:42:43.379103Z  WARN sui_package_alt::sui_flavor: Failed to query protocol version: Failed to query protocol config. Falling back to protocol version 142.
-2026-11-23T05:42:53.828912Z  WARN sui_package_alt::sui_flavor: Failed to query protocol version: Failed to query protocol config. Falling back to protocol version 142.
-2026-11-23T05:42:56.866393Z  WARN sui_package_alt::sui_flavor: Failed to query protocol version: Failed to query protocol config. Falling back to protocol version 142.
-2026-11-23T05:43:01.913025Z  WARN sui_package_alt::sui_flavor: Failed to query protocol version: Failed to query protocol config. Falling back to protocol version 142.

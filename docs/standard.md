@@ -37,7 +37,7 @@ public struct GuestsCharmed has copy, drop, store {}   // slot key, no public co
 /// The koi charmed another guest at the player's restaurant.
 public fun charm_guest(koi: &mut Koi) {
     let uid = koi.uid_mut();
-    if (df::exists_(uid, GuestsCharmed {})) {
+    if (df::exists(uid, GuestsCharmed {})) {
         let n: &mut u64 = df::borrow_mut(uid, GuestsCharmed {});
         *n = *n + 1;
     } else {
@@ -106,11 +106,34 @@ flowchart LR
 **What a game does.** Publish a manifest (JSON, on Walrus or GitHub) and link it with its hash. Format: [`manifest/schema.json`](../manifest/schema.json). It covers:
 - the types you make, and their fields' meaning;
 - slots you attach to others' objects, and the outside types you read;
-- your provenance witness;
+- your provenance witness, or a list if your modules use different ones;
 - the license for your art and your on-chain data;
 - optional `custody`: whether your objects sit in Kiosks, are locked, and your transfer policy.
 
-**Where the link lives.** In your package's metadata in Sui's Move Registry (MVR): set `continuum.manifest` (the URI) and `continuum.manifest_hash` (32-byte hash, hex) with `@mvr/metadata::package_info::set_metadata`. Creating that record needs your package's UpgradeCap. Indexers find Continuum games by these keys. (The repo still contains an older `continuum::registry` module; it will be removed before testnet.)
+**Where the link lives.** In your package's metadata in Sui's Move Registry (MVR): set `continuum.manifest` (the URI) and `continuum.manifest_hash` (32-byte hash, hex) with `@mvr/metadata::package_info::set_metadata`. Creating that record needs your package's UpgradeCap. Indexers find Continuum games by these keys.
+
+**Writing it.** A short example for a game with a slot on koi and two witnesses:
+
+```json
+{
+  "version": 0,
+  "name": "Tindahan",
+  "package": "0x…",
+  "types": [
+    { "type": "kitchen::Dish", "fields": { "from": { "type": "Provenance", "meaning": "The koi it was cooked from" } } }
+  ],
+  "slots": [
+    { "key": "display::GuestsCharmed", "on": "0x…::koi::Koi",
+      "fields": { "value": { "type": "u64", "meaning": "Guests this koi charmed" } } }
+  ],
+  "reads": ["0x…::koi::Koi"],
+  "witness": ["kitchen::Kitchen", "display::Tindahan"],
+  "license": { "art": "CC0-1.0", "data": "CC0-1.0" }
+}
+```
+
+- Leave out `id: UID` in `fields`. A slot that holds a plain value (a `u64` count, a `bool`) gets one field named `value`.
+- Outside types use the **original package ID** (`0x…::koi::Koi`). While a dependency isn't published yet, write `koi::koi::Koi`; replace it with the real ID before you link the manifest in MVR.
 
 **Trust.** No names on chain; trust follows the package ID. Which games you trust is your call.
 

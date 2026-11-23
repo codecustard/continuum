@@ -104,6 +104,10 @@ def manifest_checks(spec, game):
         out.append((f"slot on {on}", any(s.get("on", "").endswith(on) for s in slots), ""))
     for r in spec["reads"]:
         out.append((f"reads {r}", any(x.endswith(r) for x in m.get("reads", [])), ""))
+    w = m.get("witness", [])
+    w = [w] if isinstance(w, str) else w
+    for need in spec.get("witnesses", []):
+        out.append((f"witness {need}", any(x.endswith(need) for x in w), ""))
     lic = m.get("license", {})
     out.append(("license CC0", lic.get("art") == "CC0-1.0" and lic.get("data") == "CC0-1.0", ""))
     return out

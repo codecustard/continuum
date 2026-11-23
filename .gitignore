@@ -5,3 +5,4 @@ build/
 node_modules/
 evals/*/results.json
 evals/agent/runs/
+sui-move.log*

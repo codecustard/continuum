@@ -10,5 +10,5 @@ public fun charm_guest(koi: &mut Koi) {
 }
 
 public fun guests_charmed(koi: &Koi): u64 {
-    if (df::exists_(koi.uid(), GuestsCharmed {})) *df::borrow(koi.uid(), GuestsCharmed {}) else 0
+    if (df::exists(koi.uid(), GuestsCharmed {})) *df::borrow(koi.uid(), GuestsCharmed {}) else 0
 }

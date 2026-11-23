@@ -48,7 +48,7 @@ Attaching data to another game's object that has an open slot:
 
 ```move
 let uid = koi.uid_mut();
-if (sui::dynamic_field::exists_(uid, GuestsCharmed {})) {
+if (sui::dynamic_field::exists(uid, GuestsCharmed {})) {
     let n: &mut u64 = sui::dynamic_field::borrow_mut(uid, GuestsCharmed {});
     *n = *n + 1;
 } else {
