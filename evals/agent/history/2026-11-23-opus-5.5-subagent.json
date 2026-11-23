@@ -1,0 +1,84 @@
+{
+  "stamp": "20261123-055307-165",
+  "commit": "d584fb0",
+  "label": "claude-opus-5.5 (subagent)",
+  "mode": "agent",
+  "agent": null,
+  "trials": 5,
+  "k": 5,
+  "overall_pass@1": 0.96,
+  "tasks": [
+    {
+      "task": "01-slot",
+      "trials": 5,
+      "graded": 5,
+      "errors": 0,
+      "passes": 5,
+      "pass@1": 1.0,
+      "pass@5": 1.0,
+      "pass^5": 1.0,
+      "partial": 1.0,
+      "failed_checks": {},
+      "mean_seconds": 0.0,
+      "mean_cost_usd": null
+    },
+    {
+      "task": "02-derive",
+      "trials": 5,
+      "graded": 5,
+      "errors": 0,
+      "passes": 5,
+      "pass@1": 1.0,
+      "pass@5": 1.0,
+      "pass^5": 1.0,
+      "partial": 1.0,
+      "failed_checks": {},
+      "mean_seconds": 0.0,
+      "mean_cost_usd": null
+    },
+    {
+      "task": "03-record",
+      "trials": 5,
+      "graded": 5,
+      "errors": 0,
+      "passes": 5,
+      "pass@1": 1.0,
+      "pass@5": 1.0,
+      "pass^5": 1.0,
+      "partial": 1.0,
+      "failed_checks": {},
+      "mean_seconds": 0.0,
+      "mean_cost_usd": null
+    },
+    {
+      "task": "04-retire",
+      "trials": 5,
+      "graded": 5,
+      "errors": 0,
+      "passes": 5,
+      "pass@1": 1.0,
+      "pass@5": 1.0,
+      "pass^5": 1.0,
+      "partial": 1.0,
+      "failed_checks": {},
+      "mean_seconds": 0.0,
+      "mean_cost_usd": null
+    },
+    {
+      "task": "05-manifest",
+      "trials": 5,
+      "graded": 5,
+      "errors": 0,
+      "passes": 4,
+      "pass@1": 0.8,
+      "pass@5": 1.0,
+      "pass^5": 0.0,
+      "partial": 0.8,
+      "failed_checks": {
+        "file manifest.json": 1
+      },
+      "mean_seconds": 0.0,
+      "mean_cost_usd": null
+    }
+  ]
+}

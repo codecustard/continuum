@@ -4,6 +4,18 @@ Newest first. One line of why each.
 
 ## 2026-11-23
 
+- **First real-agent eval run: pass@1 0.96 (24/25).** Claude Opus 5.5 as a subagent, 5 trials per task, docs only, hidden tests. Summary in `evals/agent/history/2026-11-23-opus-5.5-subagent.json`.
+
+  | Task | pass@1 | pass@5 | pass^5 |
+  | --- | --- | --- | --- |
+  | 01-slot | 1.00 | 1.00 | 1.00 |
+  | 02-derive | 1.00 | 1.00 | 1.00 |
+  | 03-record | 1.00 | 1.00 | 1.00 |
+  | 04-retire | 1.00 | 1.00 | 1.00 |
+  | 05-manifest | 0.80 | 1.00 | 0.00 |
+
+  The one failure: `manifest.json` written to the wrong folder (task wording, #5). Agents' notes found docs/schema gaps that didn't fail checks: one `witness` per manifest (#1, 5 of 5 manifest trials), no guidance for unpublished dependency IDs (#2), deprecated `df::exists_` in snippets (#3), bare-value slot fields (#4). Caveats: same model family as the session that wrote the docs; agents were told, not forced, to stay in their folder; only their final notes were kept, not full transcripts.
+
 - **Registry removed; continuum published to testnet.** Package `0xc2d92a3cea069c9f967f9c913991f2565bf5b073b581c5178f9dba12302796e8`, epoch 1292, one module (`provenance`). Manifests link through MVR metadata. The UpgradeCap stays with a deployer address until it moves to the maintainer's own wallet; details in `deployments/testnet.json`. Kept upgradeable on testnet; freeze after the two-game proof (roadmap step 10).
 
 ## 2026-11-21
