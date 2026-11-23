@@ -30,6 +30,8 @@ python3 evals/agent/run.py --trials 5 --parallel 4 --label "opus-5.5" \
   --agent 'claude -p "$(cat TASK.md)" --output-format stream-json --verbose --dangerously-skip-permissions'
 ```
 
+For an agent that isn't a shell command (an IDE agent, a subagent), split the run: `--prepare DIR --trials 5` sets up `DIR/<task>/t<n>/`, the agent works in each `game/` folder, then `--grade DIR --trials 5 --label <model>` scores them. Save the agent's notes as `t<n>/transcript.txt`; put an `ERROR` file in a trial whose agent never ran.
+
 The agent command runs inside the task's `game` folder with `../docs`, `../schema.json` and `../deps/` beside it. Options: `--only 04` for one task, `--k` for pass@k, `--timeout` per trial, `--keep` to keep work dirs.
 
 Each run is saved in `agent/runs/<stamp>/` (gitignored): `summary.json` (commit, label, per-task metrics) and, per trial, `transcript.txt`, the agent's `sources/` and `tests/`, and `result.json`.

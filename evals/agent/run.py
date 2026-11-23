@@ -125,12 +125,19 @@ def parse_usage(log):
 
 
 def run_trial(task, trial, args, run_dir):
-    work = Path(tempfile.mkdtemp(prefix=f"ceval-{task.name}-{trial}-"))
-    game = setup(task, work)
+    pre = Path(args.grade) / task.name / f"t{trial}" if args.grade else None
+    work = pre if pre else Path(tempfile.mkdtemp(prefix=f"ceval-{task.name}-{trial}-"))
+    game = work / "game" if pre else setup(task, work)
     before = {p.relative_to(game) for p in game.rglob("*") if p.is_file()}
     t0 = time.time()
     log, status = "", "graded"
-    if args.agent:
+    if pre:
+        # Graded after an outside agent worked in a --prepare'd folder.
+        t = work / "transcript.txt"
+        log = t.read_text() if t.exists() else ""
+        if (work / "ERROR").exists():
+            status = "error"
+    elif args.agent:
         try:
             r = subprocess.run(args.agent, shell=True, cwd=game, capture_output=True, text=True, timeout=args.timeout)
             log = r.stdout + "\n--- stderr ---\n" + r.stderr
@@ -154,7 +161,7 @@ def run_trial(task, trial, args, run_dir):
             if ok:
                 ok, out = move("test", game)
                 res["checks"].append(("agent's own tests pass", ok, ""))
-                if args.agent:
+                if args.agent or args.grade:
                     res["checks"].append(("agent wrote a test", any((game / "tests").glob("*.move")), ""))
                 for h in (task / "hidden").iterdir():
                     shutil.copy(h, game / "tests" / h.name)
@@ -175,7 +182,7 @@ def run_trial(task, trial, args, run_dir):
     if (game / "manifest.json").exists():
         shutil.copy(game / "manifest.json", tdir / "manifest.json")
     (tdir / "result.json").write_text(json.dumps(res, indent=2))
-    if args.keep:
+    if args.keep or pre:
         res["workdir"] = str(work)
     else:
         shutil.rmtree(work, ignore_errors=True)
@@ -227,6 +234,8 @@ def main():
     g.add_argument("--reference", action="store_true")
     g.add_argument("--solutions", help="dir with <task>/ subfolders of files")
     g.add_argument("--agent", help="shell command run in the game folder")
+    g.add_argument("--prepare", metavar="DIR", help="only set up DIR/<task>/t<n>/ for an outside agent, then exit")
+    g.add_argument("--grade", metavar="DIR", help="grade folders made by --prepare after an outside agent worked in them")
     ap.add_argument("--trials", type=int, help="trials per task (default 5 with --agent, else 1)")
     ap.add_argument("--k", type=int, help="k for pass@k / pass^k (default: --trials, max 5)")
     ap.add_argument("--parallel", type=int, default=1, help="trials run at once")
@@ -237,13 +246,21 @@ def main():
     args = ap.parse_args()
     if not SUI:
         sys.exit("sui-move or sui not found (set SUI_MOVE)")
-    trials = args.trials or (5 if args.agent else 1)
+    trials = args.trials or (5 if (args.agent or args.prepare or args.grade) else 1)
+    tasks = [t for t in TASKS if not args.only or args.only in t.name]
+    if args.prepare:
+        root = Path(args.prepare).resolve()
+        for t in tasks:
+            for i in range(1, trials + 1):
+                setup(t, root / t.name / f"t{i}")
+        (root / "plan.json").write_text(json.dumps({"tasks": [t.name for t in tasks], "trials": trials}))
+        print(f"prepared {len(tasks) * trials} folders under {root}; the agent works in <task>/t<n>/game")
+        return
     k = args.k or min(trials, 5)
 
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S-%f")[:-3]
     run_dir = HERE / "runs" / stamp
     run_dir.mkdir(parents=True)
-    tasks = [t for t in TASKS if not args.only or args.only in t.name]
     jobs = [(t, i) for t in tasks for i in range(1, trials + 1)]
     with ThreadPoolExecutor(max_workers=args.parallel) as ex:
         results = list(ex.map(lambda j: run_trial(j[0], j[1], args, run_dir), jobs))
@@ -262,7 +279,7 @@ def main():
     if errors:
         print("errors are trials where the agent never ran; see transcript.txt")
     meta = {"stamp": stamp, "commit": git_commit(), "label": args.label,
-            "mode": "agent" if args.agent else ("reference" if args.reference else "solutions"),
+            "mode": "agent" if (args.agent or args.grade) else ("reference" if args.reference else "solutions"),
             "agent": args.agent, "trials": trials, "k": k, "overall_pass@1": overall, "tasks": summary}
     (run_dir / "summary.json").write_text(json.dumps(meta, indent=2))
     sys.exit(0 if graded and overall == 1.0 and not errors else 1)
