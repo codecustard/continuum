@@ -1,0 +1,1 @@
+2026-11-23T05:39:59.833240Z  WARN sui_package_alt::sui_flavor: Failed to query protocol version: Failed to query protocol config. Falling back to protocol version 142.

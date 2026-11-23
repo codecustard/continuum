@@ -2,7 +2,6 @@
   "network": "testnet",
   "continuum": {
     "package": null,
-    "registry": null,
     "published_epoch": null
   }
 }

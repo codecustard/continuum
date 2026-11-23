@@ -6,8 +6,8 @@ The proof is two games sharing one object. The spec is written after, from what 
 | --- | --- | --- | --- |
 | 1 | `continuum` package: registry + provenance | this repo | ✅ Done (`ed85098`), not yet on testnet |
 | 2 | Remove `registry` (moved to MVR), publish `continuum` to testnet; fill `deployments/testnet.json` | this repo | Next |
-| 3 | Koi package: `Koi`, mint, breed, open slot, lock, register | suikoi | Planned |
-| 4 | Game's register action mints on testnet | suikoi | Planned |
+| 3 | Koi package: `Koi`, mint, breed, open slot, lock, MVR manifest metadata (`continuum.manifest`, `continuum.manifest_hash`) | suikoi | Planned |
+| 4 | Game mints on testnet; MVR manifest metadata (`continuum.manifest`, `continuum.manifest_hash`) set | suikoi | Planned |
 | 5 | Indexer + snapshot for testnet resets | this repo | Planned |
 | 6 | TypeScript SDK: reads, `derive` builder with Kiosk borrow | this repo | Planned |
 | 7 | Gang Wars MVP (off-chain results first, records later) | gang-wars | Planned |
@@ -34,10 +34,10 @@ Evals ([evals/](../evals/)) run before each publish; see when to run in its READ
 
 AI-built and vibe-coded games mostly won't write Move. Idea: a hosted `continuum::records` module.
 
-- A game registers and gets a `GameCap`; the cap stands in for the witness.
+- A game signs up and gets a `GameCap`; the cap stands in for the witness.
 - Records derive from any object and hold generic key/value data; the manifest says what keys mean.
 - Creating a record needs the player's object and the game's approval in one transaction: the game's server signs a ticket (player, object, game) checked on chain. Later writes need only the cap.
-- Registry gets a second table keyed by `GameCap` ID (addable by upgrade).
+- A small module maps `GameCap` IDs to games (addable by upgrade).
 - Agent-friendly: MCP server, `AGENTS.md`, `llms.txt`, a starter template.
 
 Open, with current leanings:

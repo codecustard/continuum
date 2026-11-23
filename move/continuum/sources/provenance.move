@@ -160,7 +160,7 @@ public fun source_is<T: key>(self: &Provenance): bool {
 public fun deriver(self: &Provenance): TypeName { self.deriver }
 
 /// Original package ID of the game that made this record.
-/// Look it up in `continuum::registry`.
+/// Find its manifest through its MVR metadata (`continuum.manifest`).
 public fun deriver_package(self: &Provenance): address {
     address::from_ascii_bytes(self.deriver.address_string().as_bytes())
 }

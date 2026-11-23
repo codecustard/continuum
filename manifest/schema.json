@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/codecustard/continuum/manifest/schema.json",
   "title": "Continuum game manifest v0",
-  "description": "Describes a registered package: what it makes, what it reads, what its slot fields mean, and the license for its art and data. Its hash is stored in continuum::registry.",
+  "description": "Describes a game package: what it makes, what it reads, what its slot fields mean, and the license for its art and data. Linked from the package's MVR metadata as continuum.manifest, with its SHA-256 as continuum.manifest_hash.",
   "type": "object",
   "required": [
     "version",
@@ -22,7 +22,7 @@
     "package": {
       "type": "string",
       "pattern": "^0x[0-9a-f]{64}$",
-      "description": "Original package ID; must match the registry key."
+      "description": "Original package ID; must match the MVR package that links this manifest."
     },
     "description": {
       "type": "string"
