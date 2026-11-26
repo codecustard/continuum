@@ -10,3 +10,5 @@
 {"id": "kiosk", "answer": "No, it's each collection's choice. Games borrow it out and return it in the same transaction (kiosk::borrow_val / return_val)."}
 {"id": "mvr", "answer": "In Sui's Move Registry (MVR) package metadata under continuum.manifest and continuum.manifest_hash. Lost: an on-chain 'is registered' check, which was near useless since anyone could register."}
 {"id": "no-change", "answer": "Yes: reading, provenance and records work on any Sui object. Only slots need the author to expose uid_mut."}
+{"id": "content-trust", "answer": "The record is untrusted: author, origin and parent are claims, not proof. It must re-check the body against its own rules. The blob ID only guarantees the content is exactly what was stored, not who stored it."}
+{"id": "content-version", "answer": "Adding new optional fields stays /0; readers ignore unknown fields. Removing or renaming a field, making one required, or changing a field's meaning needs /1. Body changes are the game's own business and never bump the envelope version."}

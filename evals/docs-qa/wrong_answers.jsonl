@@ -10,3 +10,5 @@
 {"id": "kiosk", "answer": "Yes, every item must be in a kiosk."}
 {"id": "mvr", "answer": "In Continuum's own registry contract."}
 {"id": "no-change", "answer": "No, the collection must upgrade to support Continuum."}
+{"id": "content-trust", "answer": "It can trust everything since it came from Walrus; just play the body."}
+{"id": "content-version", "answer": "Any change at all needs a new version, including body changes."}

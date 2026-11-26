@@ -2,6 +2,10 @@
 
 Newest first. One line of why each.
 
+## 2026-11-26
+
+- **Draft spec for player-made content: `continuum.content/0`** ([content.md](content.md)). A shared envelope (game, kind, id, name, origin, assets, published) around a game-defined body, stored as a Walrus blob. First user: Every One Counts (runs and packs, Walrus testnet). Docs only; the on-chain link (`ContentRef` with `derive`, manifest entry) waits until players actually make content.
+
 ## 2026-11-23
 
 - **Fixed the gaps the eval found (#1–#5); manifest task reran at 5/5** (pass^5 1.00, up from 0.00). `witness` takes a list; docs cover unpublished dependency IDs, plain-value slots, caps and omitted `retire`. Summary in `evals/agent/history/2026-11-23-manifest-rerun.json`.
