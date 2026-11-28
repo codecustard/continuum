@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Continuum demo: one item, two games</title>
+<meta name="description" content="A run made in Every One Counts, recorded on Sui testnet, read and remixed by a second game with on-chain lineage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+  --bg:light-dark(#ffffff,#141518);--ink:light-dark(#18191d,#ececea);--muted:light-dark(#5a5d66,#a2a5ad);
+  --line:light-dark(#e3e3e6,#2b2d33);--soft:light-dark(#f5f5f6,#1c1d21);--hi:#cf3528;--hi-deep:#a9271c;--ok:light-dark(#1f6b52,#5fc39a)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,sans-serif}
+main{max-width:860px;margin:0 auto;padding:40px 20px 80px}
+h1,h2,h3{font-family:"Familjen Grotesk",system-ui,sans-serif;font-weight:700;line-height:1.08;margin:0}
+h1{font-size:clamp(30px,5vw,44px)}
+h2{font-size:28px;margin:4px 0 6px}
+h3{font-size:15px;color:var(--muted);font-weight:500;margin:34px 0 10px}
+p{margin:8px 0}
+a{color:var(--hi-deep)}a:hover{color:var(--hi)}
+code{font:13px "JetBrains Mono",ui-monospace,monospace}
+.lede{color:var(--muted);max-width:62ch}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 6px}
+.bar input{flex:1 1 380px;min-width:0;height:44px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);font:13px "JetBrains Mono",monospace}
+.btn{height:44px;padding:0 16px;border-radius:10px;border:0;background:var(--ink);color:var(--bg);font:600 14px "Instrument Sans",sans-serif;cursor:pointer;display:inline-flex;align-items:center;text-decoration:none}
+.btn:hover{background:var(--hi);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.small{font-size:14px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.kicker{font-size:14px;color:var(--muted)}
+.blurb{font-size:17px}
+.boss-line{margin-top:12px}
+.waves{list-style:none;padding:0;margin:8px 0 0;border-top:1px solid var(--line)}
+.waves li{display:grid;grid-template-columns:70px 1fr auto;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+.waves .wn{color:var(--muted)}.waves .wcount{font-variant-numeric:tabular-nums;color:var(--muted)}
+.waves li.boss .wn,.waves li.boss .wname{color:var(--hi-deep);font-weight:600}
+.chain{list-style:none;padding:0;margin:0}
+.chain .node{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--soft)}
+.chain .link{font-size:13px;padding:6px 0 6px 18px;color:var(--muted)}
+.chain .link.ok{color:var(--ok)}
+.err{color:var(--hi-deep)}
+#status{margin-top:14px;padding:10px 14px;border-radius:10px;background:var(--soft)}
+#status.done{border:1px solid var(--ok)}
+footer{margin-top:48px;font-size:14px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <p class="small muted"><a href="../">Continuum</a> · demo on Sui testnet</p>
+  <h1>One item, two games</h1>
+  <p class="lede">A run made in <b>Every One Counts</b> is stored on Walrus and recorded on Sui as a <code>ContentRef</code>. This page is a second game: it reads that object, loads the run, draws it its own way, and can publish a remix whose link back to the original is verified on chain.</p>
+
+  <div class="bar">
+    <label for="refId" class="small muted" style="position:absolute;left:-9999px">ContentRef object id</label>
+    <input id="refId" placeholder="ContentRef object id (0x…)" spellcheck="false" autocomplete="off">
+    <button id="go" class="btn">Read from Sui</button>
+    <button id="connect" class="btn ghost">Connect wallet</button>
+  </div>
+  <p class="small muted"><span id="examples"></span> <span id="who"></span></p>
+  <div id="status" hidden></div>
+  <div id="out"></div>
+
+  <footer>
+    Testnet only. Records are untrusted: this page caps their size, escapes their text and only draws what it understands.
+    Spec: <a href="https://github.com/codecustard/continuum/blob/main/docs/content.md">content records</a> ·
+    Walkthrough: <a href="https://github.com/codecustard/continuum/blob/main/docs/demo.md">docs/demo.md</a>
+  </footer>
+</main>
+<script src="config.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

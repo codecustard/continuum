@@ -1,6 +1,6 @@
 # Content records: `continuum.content/0`
 
-**Status: draft, version 0.** An off-chain format. Nothing here is on chain yet, and no Move code uses it.
+**Status: draft, version 0.** An off-chain format. A demo package records these on Sui testnet as `ContentRef` objects (see [On chain](#on-chain-contentref-demo-testnet)).
 
 A content record is a small JSON document describing something a player made in a game: a level, a run, a pack of cards, a recipe. It's stored as one blob (today on Walrus testnet), so any game can load it by its blob ID, see who made it and what it was remixed from, and decide for itself whether to play it.
 
@@ -56,7 +56,7 @@ Same shape as Every One Counts' `origin` (`shared/origin.ts`):
 
 | Field | Meaning |
 | --- | --- |
-| `author` | Who made it, as an opaque string: a player ID in the game, or a Sui address. Not verified. |
+| `author` | Who made it: a **pseudonymous handle** (Every One Counts uses `p-` + 12 hex, derived from the player ID with a server secret), the studio's name, or a Sui address **only if the player signed with that wallet**. Never a raw player or guest ID: records are public and permanent. Not verified. |
 | `parent` | What it was remixed or built from, as a reference (below), or `null` for an original. |
 | `game` | The game where it was **made**. Usually the same as the envelope's `game`; differs when one game republishes another game's content. |
 
@@ -106,12 +106,23 @@ What the blob ID does guarantee: the content is exactly what was stored (Walrus 
 - Readers accept only versions they know. A game that reads `/1` should keep reading `/0` for records already stored.
 - Body changes are the game's own business and never bump the envelope version.
 
-## Later: on chain (not built)
+## On chain: `ContentRef` (demo, testnet)
+
+The `content` package (`move/content`) records a content record on Sui:
+
+- `publish(game, kind, author, name, blob_id, parent_ref)` makes an original. Its `parent_ref` is the record's own text reference, so it stays a claim.
+- `remix<S: key>(parent: &S, game, kind, author, name, blob_id)` makes an item from another object, usually another `ContentRef`. It calls `provenance::derive`, so the parent link is **verified**.
+- A `ContentRef` is frozen when created: it never changes, and any game can read it or remix from it in any transaction.
+
+A remix's own record should name the same parent as `sui:<ContentRef id>`. Package IDs and a walkthrough: [demo.md](demo.md).
+
+## Later (not built)
 
 Today the record lives only on Walrus. The planned link to Continuum's rules, once players actually make content:
 
 - **Ownership.** Each Walrus store creates a Sui `Blob` object. Holding it in the game's address makes every published item a Sui object the game controls.
-- **Provenance (Rule 2).** A small wrapper object (`ContentRef`: game, kind, author, blob ID, parent) would be created with `provenance::derive` from its parent's `ContentRef` or source object. Then a remix's `parent` becomes a **verified** on-chain link instead of a claim, readable by any game. Parents that can't be passed in (another chain, an off-chain item) would use `provenance::claim` and stay unverified, exactly as Rule 2 says today.
+- **Each game's own witness.** The demo's `ContentRef` uses one witness for every game, so `derived_by` says "the content module", not which game. A production version would let each game derive with its own witness.
+- **Parents that can't be passed in** (another chain, an off-chain item) would use `provenance::claim` and stay unverified, exactly as Rule 2 says today.
 - **Manifest (Rule 3).** A game's manifest would declare the content it publishes (kinds, body shapes, the aggregator it uses), so indexers can list it.
 
 Until then, `walrus:` and `sui:` references are the bridge: the same strings can later be checked on chain.
