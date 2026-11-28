@@ -13,6 +13,7 @@ A run made in **Every One Counts** is stored on Walrus, recorded on Sui as a `Co
 | Original: *Block Party* (Every One Counts) | ContentRef `0x47e8725c9a53b2917922c3db5bfac3dfd6743e0889a54fb8c84f73bf2878e1c4`, record blob `f0vP2hOST23DjxJ0yCv77GqFIC7jkeQOOyBSXVgXxPY` |
 | Remix: *Block Party, Goose Rush* (demo game) | ContentRef `0x8f274fcb5a5d79d2c88c381031fb481cf3cc978ab0667574fbbc01a6c01ee515`, record blob `n49uDq3gLVwA-Kheij1H5cr8WCokNf_r-XMIVNM3XCA` |
 | Remix of the remix: *…, Speedrun* (made from the page with a wallet) | ContentRef `0xe96a136211ad81d8e19bab1858e763eda87ef564a67553128bc4d57660a01e80` |
+| Fourth link: *…, Speedrun, Goose Rush* (made while recording the clip) | ContentRef `0x879af74cdfbead905e6a95163d76cde9f028ae574608a22e0e0bdd5ca26a8397`, tx `A13fQLRyNxuzAbiCZAahhAHKvDvQghre8eCBKwGaumJd` |
 
 Explorer: `https://suiscan.xyz/testnet/object/<id>`. Records: `https://aggregator.walrus-testnet.walrus.space/v1/blobs/<blob id>`. Walrus testnet keeps the blobs for 53 epochs (about 53 days, to mid-January 2027); store them again before then if the demo must stay up.
 
@@ -47,6 +48,19 @@ The `content` package is separate from `continuum` on purpose: it's a demo of th
 - One witness for every game: `derived_by` says "the content module", not which game. Production would give each game its own witness.
 - `game`, `author` and the record's text are what the publisher wrote; only the parent link and the blob's content are verified.
 - The original is a studio run, not a player's. Player content replaces it after the Every One Counts Reddit test.
+
+## Clip
+
+**[demo/continuum-demo.mp4](../demo/continuum-demo.mp4)** (59 s, 1280×720, no audio, captions on screen). Recorded in a headless browser against the live sites; nothing is staged:
+
+1. Every One Counts loads *Block Party* from its Walrus record (`ones.suikoi.life/?walrus=f0vP2h…`).
+2. Suiscan shows the original ContentRef's fields (game, author, blob ID).
+3. The demo page reads it from Sui and draws it.
+4. The page remixes *Speedrun*: the record goes to Walrus, then `content_ref::remix` is signed with the testnet deploy key (a script stands in for the wallet; no wallet window is shown). Real time, not sped up.
+5. The lineage shows four items, each link verified by `derive`; then the real transaction on Suiscan.
+6. Repo and demo links.
+
+Recording scripts: `demo/clip/` (Playwright + ffmpeg). Running them makes a new remix on testnet.
 
 ## 60-second clip (script)
 
