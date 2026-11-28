@@ -1,0 +1,174 @@
+{
+  "schema": "continuum.content/0",
+  "game": "continuum-demo",
+  "kind": "run",
+  "id": "r-goose-rush",
+  "name": "Block Party, Goose Rush",
+  "origin": {
+    "author": "0xccgg",
+    "parent": "sui:0x47e8725c9a53b2917922c3db5bfac3dfd6743e0889a54fb8c84f73bf2878e1c4",
+    "game": "continuum-demo"
+  },
+  "body": {
+    "pack": "custards",
+    "blurb": "Goose Rush: double every goose. Remixed from Block Party.",
+    "file": {
+      "v": 1,
+      "boss": {
+        "id": "duck",
+        "name": "a horse-sized duck",
+        "short": "the duck"
+      },
+      "waves": [
+        {
+          "id": "raccoons",
+          "name": "20 geese and 6 raccoons",
+          "tip": "Raccoons get angry when hurt. Finish them fast.",
+          "foes": [
+            {
+              "foe": "goose",
+              "count": 40
+            },
+            {
+              "foe": "raccoon",
+              "count": 6
+            }
+          ]
+        },
+        {
+          "id": "pinatas",
+          "name": "80 toddlers and 2 pi\u00f1atas",
+          "tip": "Pi\u00f1atas burst into smaller ones.",
+          "foes": [
+            {
+              "foe": "toddler",
+              "count": 80
+            },
+            {
+              "foe": "pinata",
+              "count": 2,
+              "lane": "r"
+            }
+          ]
+        },
+        {
+          "id": "goats",
+          "name": "2 billy goats and their geese",
+          "tip": "Goats charge straight through a line. Spread out.",
+          "foes": [
+            {
+              "foe": "goat",
+              "count": 1,
+              "lane": "r"
+            },
+            {
+              "foe": "goat",
+              "count": 1,
+              "lane": "r2"
+            },
+            {
+              "foe": "goose",
+              "count": 36
+            }
+          ]
+        },
+        {
+          "id": "mother",
+          "name": "mother goose",
+          "tip": "She keeps calling in more geese. Rush her.",
+          "foes": [
+            {
+              "foe": "mothergoose",
+              "count": 1,
+              "boss": true,
+              "lane": "r"
+            },
+            {
+              "foe": "toddler",
+              "count": 45
+            }
+          ]
+        },
+        {
+          "id": "kaiju",
+          "name": "a tiny kaiju and fireworks",
+          "tip": "Fire in a line, explosions when the red geese drop.",
+          "foes": [
+            {
+              "foe": "kaiju",
+              "count": 1,
+              "boss": true,
+              "lane": "r"
+            },
+            {
+              "foe": "firework",
+              "count": 10
+            },
+            {
+              "foe": "goose",
+              "count": 20
+            }
+          ]
+        },
+        {
+          "id": "duck",
+          "name": "a horse-sized duck",
+          "tip": "This week's boss.",
+          "foes": [
+            {
+              "foe": "duck",
+              "count": 1,
+              "boss": true,
+              "lane": "r"
+            },
+            {
+              "foe": "goose",
+              "count": 48,
+              "hp": 28,
+              "atk": 4.2,
+              "r": 13
+            }
+          ]
+        }
+      ],
+      "pool": [
+        "pizza",
+        "energy",
+        "boombox",
+        "chain",
+        "gloves",
+        "protein",
+        "slingshot",
+        "marbles",
+        "pointer",
+        "dice",
+        "horseshoe",
+        "sock"
+      ],
+      "foes": [],
+      "relics": [],
+      "synergies": true,
+      "challenges": [
+        {
+          "id": "fullset",
+          "text": "Complete a relic set",
+          "fullSet": true
+        },
+        {
+          "id": "heat2",
+          "text": "Beat the boss on Heat 2",
+          "win": true,
+          "minHeat": 2
+        },
+        {
+          "id": "norecruit",
+          "text": "Beat the boss without recruiting",
+          "win": true,
+          "noRecruit": true
+        }
+      ]
+    }
+  },
+  "assets": {},
+  "published": "2026-11-28T02:57:20Z"
+}

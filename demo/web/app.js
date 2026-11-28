@@ -16,6 +16,7 @@ const TX = (d) => `https://suiscan.xyz/testnet/tx/${d}`;
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const short = (id) => (id ? `${id.slice(0, 6)}…${id.slice(-4)}` : '');
+const who = (a) => (/^0x[0-9a-f]{64}$/i.test(a ?? '') ? short(a) : a);
 
 // ---------- Sui reads ----------
 async function gql(query, variables) {
@@ -86,7 +87,8 @@ function renderRun(file) {
   const waves = file.waves.slice(0, 10).map((w, i) => {
     const n = (w.foes ?? []).reduce((a, f) => a + (Number(f.count) || 0), 0);
     const last = i === file.waves.length - 1;
-    return `<li class="${last ? 'boss' : ''}"><span class="wn">${last ? 'Boss' : `Wave ${i + 1}`}</span><span class="wname">${esc(w.name)}</span><span class="wcount">${n}</span></li>`;
+    const mix = (w.foes ?? []).map((f) => `${Number(f.count) || 0} ${esc(f.foe)}`).join(', ');
+    return `<li class="${last ? 'boss' : ''}"><span class="wn">${last ? 'Boss' : `Wave ${i + 1}`}</span><span class="wname">${mix}</span><span class="wcount">${n}</span></li>`;
   }).join('');
   return `<p class="boss-line">Boss: <b>${esc(file.boss?.name)}</b></p><ol class="waves">${waves}</ol>`;
 }
@@ -98,7 +100,7 @@ function renderRecord(rec, ref) {
     ? `<a class="btn ghost" href="https://ones.suikoi.life/?walrus=${encodeURIComponent(ref.f.blob_id)}" target="_blank" rel="noopener">Play it in Every One Counts</a>` : '';
   return `
     <div class="card">
-      <div class="kicker">${esc(label)} · made in <b>${esc(gameName(o.game || rec.game))}</b> by <b>${esc(o.author)}</b></div>
+      <div class="kicker">${esc(label)} · made in <b>${esc(gameName(o.game || rec.game))}</b> by <b>${esc(who(o.author))}</b></div>
       <h2>${esc(rec.name)}</h2>
       <p class="blurb">${esc(rec.body?.blurb ?? '')}</p>
       ${rec.kind === 'run' ? renderRun(rec.body?.file) : '<p class="muted">Body shown as data only.</p>'}
@@ -111,11 +113,12 @@ function renderChain(chain) {
   const items = chain.map((n, i) => {
     const f = n.f ?? {};
     const isRef = isContentRef(n.type);
-    const title = isRef ? `${esc(f.name)} <span class="muted">· ${esc(gameName(f.game))} · ${esc(f.kind)} · by ${esc(f.author)}</span>` : `${esc(n.type.split('::').slice(-1)[0])} object`;
+    const title = isRef ? `${esc(f.name)} <span class="muted">· ${esc(gameName(f.game))} · ${esc(f.kind)} · by ${esc(who(f.author))}</span>` : `${esc(n.type.split('::').slice(-1)[0])} object`;
     const link = n.verified
-      ? `<div class="link ok">made from ↓ · verified by <code>provenance::derive</code></div>`
+      ? `<div class="link ok">made from the item below · verified by <code>provenance::derive</code></div>`
       : (i < chain.length - 1 ? '' : `<div class="link root">${isRef ? 'original' : 'source object'}</div>`);
-    return `<li><div class="node"><a href="${EXPLORER(n.id)}" target="_blank" rel="noopener"><code>${short(n.id)}</code></a> ${title}</div>${link}</li>`;
+    const open = isRef && i > 0 ? ` <a href="?ref=${n.id}">open</a>` : '';
+    return `<li><div class="node"><a href="${EXPLORER(n.id)}" target="_blank" rel="noopener" title="View on Suiscan"><code>${short(n.id)}</code></a> ${title}${open}</div>${link}</li>`;
   }).join('');
   return `<ol class="chain">${items}</ol>`;
 }
@@ -170,8 +173,9 @@ async function remix(parentRef, parentRec, twistKey) {
   const res = await wallet.features['sui:signAndExecuteTransaction'].signAndExecuteTransaction({ transaction: tx, account, chain: 'sui:testnet' });
   status('Waiting for Sui…');
   const newId = await createdRef(res.digest);
-  status(`Done. <a href="${TX(res.digest)}" target="_blank" rel="noopener">Transaction</a>`, true);
+  const done = `Remix published. <a href="${TX(res.digest)}" target="_blank" rel="noopener">View the transaction</a>`;
   if (newId) { $('#refId').value = newId; history.replaceState(null, '', `?ref=${newId}`); await load(newId); }
+  status(done, true);
 }
 async function createdRef(digest) {
   for (let i = 0; i < 20; i++) {
@@ -206,7 +210,10 @@ async function load(id) {
         <p class="small">Makes a new record on Walrus and a new ContentRef whose parent is <code>${short(head.id)}</code>, linked with <code>derive</code>. Needs a Sui wallet on <b>testnet</b> with a little testnet SUI.</p>
         <div class="row">${Object.entries(TWISTS).map(([k, t]) => `<button class="btn" data-twist="${k}">${esc(t.label)}</button>`).join('')}</div>
       </section>` : ''}`;
-    document.querySelectorAll('[data-twist]').forEach((b) => b.addEventListener('click', () => remix(head, rec, b.dataset.twist).catch((e) => status(esc(e.message ?? e)))));
+    document.querySelectorAll('[data-twist]').forEach((b) => b.addEventListener('click', async () => {
+      document.querySelectorAll('[data-twist]').forEach((x) => { x.disabled = true; });
+      try { await remix(head, rec, b.dataset.twist); } catch (e) { status(esc(e.message ?? e)); document.querySelectorAll('[data-twist]').forEach((x) => { x.disabled = false; }); }
+    }));
   } catch (e) {
     $('#out').innerHTML = `<p class="err">${esc(e.message ?? e)}</p>`;
   }

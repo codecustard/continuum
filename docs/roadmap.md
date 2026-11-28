@@ -11,7 +11,7 @@ The proof is two games sharing one object. The spec is written after, from what 
 | 5 | Indexer + snapshot for testnet resets | this repo | Planned |
 | 6 | TypeScript SDK: reads, `derive` builder with Kiosk borrow | this repo | Planned |
 | 7 | Gang Wars MVP (off-chain results first, records later) | gang-wars | Planned |
-| 8 | Second game reads Koi, attaches a slot, derives | tindahan or other | Planned |
+| 8 | Second game reads Koi, attaches a slot, derives | tindahan or other | Planned. Content version done Nov 27: a second game reads and remixes an Every One Counts run ([demo.md](demo.md)) |
 | 9 | One-page spec from what the games used | this repo | Planned |
 | 10 | Freeze `continuum` (make immutable) after the proof | this repo | Planned |
 

@@ -2,6 +2,11 @@
 
 Newest first. One line of why each.
 
+## 2026-11-27
+
+- **Demo on testnet: `content` package with `ContentRef`.** Package `0xceadf57865927408659b8e0acb543bda5f754e10a5a271c63b15af6a82641aa3`. `publish` for originals, `remix` via `provenance::derive` for verified lineage; refs are frozen so any game can read and remix them. Separate from `continuum` because it's a demo of the content format, not the standard, and adding it to `continuum` would need an upgrade signed with the maintainer's wallet. Reader page at `site/demo/`. Walkthrough: [demo.md](demo.md).
+- Package publishing on testnet now costs about 1.06 SUI of computation (was about 0.001 on Nov 22); the faucet needs proof of work for scripted requests.
+
 ## 2026-11-26
 
 - **Draft spec for player-made content: `continuum.content/0`** ([content.md](content.md)). A shared envelope (game, kind, id, name, origin, assets, published) around a game-defined body, stored as a Walrus blob. First user: Every One Counts (runs and packs, Walrus testnet). Docs only; the on-chain link (`ContentRef` with `derive`, manifest entry) waits until players actually make content.
